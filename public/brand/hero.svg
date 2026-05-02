@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800" role="img" aria-label="Watercolor brand artwork">
+  <defs>
+    <radialGradient id="coral" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#E07A6B" stop-opacity="0.85"/>
+      <stop offset="60%" stop-color="#E07A6B" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#E07A6B" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="peri" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#A9B8E0" stop-opacity="0.75"/>
+      <stop offset="60%" stop-color="#A9B8E0" stop-opacity="0.25"/>
+      <stop offset="100%" stop-color="#A9B8E0" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="blush" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#F4D5CE" stop-opacity="0.95"/>
+      <stop offset="60%" stop-color="#F4D5CE" stop-opacity="0.35"/>
+      <stop offset="100%" stop-color="#F4D5CE" stop-opacity="0"/>
+    </radialGradient>
+    <filter id="grain">
+      <feTurbulence type="fractalNoise" baseFrequency="0.85" numOctaves="2" seed="3"/>
+      <feColorMatrix values="0 0 0 0 0  0 0 0 0 0  0 0 0 0 0  0 0 0 0.07 0"/>
+      <feComposite in2="SourceGraphic" operator="in"/>
+    </filter>
+  </defs>
+  <rect width="800" height="800" fill="#FBF7F4"/>
+  <ellipse cx="280" cy="320" rx="320" ry="280" fill="url(#coral)"/>
+  <ellipse cx="540" cy="500" rx="300" ry="260" fill="url(#peri)"/>
+  <ellipse cx="380" cy="560" rx="260" ry="220" fill="url(#blush)"/>
+  <ellipse cx="600" cy="220" rx="180" ry="160" fill="url(#blush)" opacity="0.7"/>
+  <rect width="800" height="800" filter="url(#grain)" fill="#2A2D3A" opacity="0.06"/>
+</svg>

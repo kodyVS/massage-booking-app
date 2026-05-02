@@ -1,0 +1,42 @@
+@import "tailwindcss";
+
+/*
+ * Vital Touch Massage — brand palette
+ * Watercolor: coral / periwinkle / cream
+ */
+@theme {
+  --color-coral: #e07a6b;
+  --color-coral-dark: #b85a4d;
+  --color-periwinkle: #a9b8e0;
+  --color-blush: #f4d5ce;
+  --color-cream: #fbf7f4;
+  --color-ink: #2a2d3a;
+
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-serif: var(--font-fraunces), Georgia, serif;
+  --font-display: var(--font-fraunces), Georgia, serif;
+}
+
+:root {
+  --background: var(--color-cream);
+  --foreground: var(--color-ink);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+}
+
+html,
+body {
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+}
+
+/* Periwinkle focus ring across the app for consistent accessibility. */
+*:focus-visible {
+  outline: 2px solid var(--color-periwinkle);
+  outline-offset: 2px;
+  border-radius: 2px;
+}

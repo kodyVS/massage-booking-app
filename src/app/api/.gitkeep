@@ -1,0 +1,5 @@
+# API route handlers will be added by downstream phases.
+# Each route should be a thin delegator (under 20 lines) that:
+#   1. Parses request input
+#   2. Calls the appropriate controller from `@/backend`
+#   3. Maps controller return → NextResponse via `src/lib/api-response.ts`

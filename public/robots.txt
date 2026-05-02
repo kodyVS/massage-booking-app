@@ -1,0 +1,13 @@
+User-agent: *
+Allow: /
+
+# Block authenticated portals from indexing.
+Disallow: /admin
+Disallow: /portal
+Disallow: /api/
+Disallow: /intake/
+Disallow: /manage/
+Disallow: /book/confirm
+Disallow: /book/success
+
+Sitemap: /sitemap.xml
