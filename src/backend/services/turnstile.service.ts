@@ -31,7 +31,7 @@ export async function verifyToken(
 ): Promise<void> {
   const secret = process.env.TURNSTILE_SECRET_KEY;
   if (!secret) {
-    // No secret configured — fail closed: refuse the booking. We never want a
+    // No secret configured - fail closed: refuse the booking. We never want a
     // misconfigured prod env to silently disable bot protection.
     throw new ValidationError("Bot protection is not configured");
   }

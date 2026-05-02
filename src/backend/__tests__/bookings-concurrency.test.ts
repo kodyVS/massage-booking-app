@@ -77,7 +77,7 @@ beforeEach(async () => {
   slotStart = future.toISOString();
 });
 
-test("two simultaneous bookings on the same slot — exactly one wins", async () => {
+test("two simultaneous bookings on the same slot - exactly one wins", async () => {
   const input = {
     therapistId,
     serviceId,

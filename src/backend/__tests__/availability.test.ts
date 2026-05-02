@@ -108,9 +108,9 @@ test("excludes slots that overlap an existing booking", async () => {
   assert.ok(!starts.includes(`${TEST_DATE}T10:30:00.000Z`));
   assert.ok(!starts.includes(`${TEST_DATE}T11:00:00.000Z`));
   assert.ok(!starts.includes(`${TEST_DATE}T11:30:00.000Z`));
-  // 10:00 ends at 11:00 — fine.
+  // 10:00 ends at 11:00 - fine.
   assert.ok(starts.includes(`${TEST_DATE}T10:00:00.000Z`));
-  // 12:00 starts when booking ends — fine (no buffer).
+  // 12:00 starts when booking ends - fine (no buffer).
   assert.ok(starts.includes(`${TEST_DATE}T12:00:00.000Z`));
 });
 

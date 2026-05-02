@@ -117,7 +117,7 @@ export default async function AdminSchedulesPage({
 }
 
 /**
- * Default to a 7-day window starting today rather than the previous Sunday —
+ * Default to a 7-day window starting today rather than the previous Sunday -
  * an admin viewing the schedule cares about today + the next 6 days, not
  * what already happened earlier this week.
  */

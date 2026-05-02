@@ -24,7 +24,7 @@ interface AvailabilityResult {
  * Service-first booking picker.
  *
  *   1. Date picker (90-day strip + custom-date popover up to 1 year)
- *   2. Time-slot list — each slot shows the therapists who are available
+ *   2. Time-slot list - each slot shows the therapists who are available
  *   3. After picking a slot, the user picks one of those therapists
  *   4. Continue → /book/confirm with therapist + service + slot
  *
@@ -150,7 +150,7 @@ export function ServiceBookingPicker({ service, therapists, tz }: Props) {
           </p>
         ) : slots.length === 0 ? (
           <p className="text-sm text-ink/70">
-            No openings on this day. Try another date — our team is also
+            No openings on this day. Try another date - our team is also
             available later this week.
           </p>
         ) : (
@@ -229,7 +229,7 @@ export function ServiceBookingPicker({ service, therapists, tz }: Props) {
           </h2>
           {availableTherapistsForSlot.length === 0 ? (
             <p className="text-sm text-ink/70">
-              No therapists are available for this exact slot — please pick
+              No therapists are available for this exact slot - please pick
               another time.
             </p>
           ) : (

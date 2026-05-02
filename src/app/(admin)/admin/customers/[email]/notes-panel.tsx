@@ -51,7 +51,7 @@ export function CustomerNotesPanel({
     <section className="rounded-2xl bg-cream/80 p-5 ring-1 ring-coral/10">
       <p className="font-display text-xl text-coral-dark">Admin notes</p>
       <p className="mt-1 text-xs text-ink/60">
-        Internal — not visible to the customer or therapists.
+        Internal - not visible to the customer or therapists.
       </p>
 
       <form onSubmit={add} className="mt-3 space-y-2">

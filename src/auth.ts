@@ -5,7 +5,7 @@ import { authConfig } from "@/auth.config";
 
 /**
  * Node-runtime NextAuth instance. The credentials provider's `authorize`
- * delegates to `authController.verifyCredentials` — the only place where
+ * delegates to `authController.verifyCredentials` - the only place where
  * NextAuth and the backend module meet. Used by the route handler and
  * server actions; the middleware uses the edge-safe config in
  * `src/auth.config.ts` instead so it doesn't pull Mongoose into Edge.
@@ -35,7 +35,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           };
         } catch (err) {
           if (err instanceof ValidationError) return null;
-          // UnauthorizedError or anything else — surface as failed login.
+          // UnauthorizedError or anything else - surface as failed login.
           return null;
         }
       },

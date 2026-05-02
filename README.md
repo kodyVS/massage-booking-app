@@ -1,4 +1,4 @@
-# Vital Touch Massage — Booking App
+# Vital Touch Massage - Booking App
 
 Production-ready booking app for **Vital Touch Massage**: public booking flow,
 admin portal, worker portal, transactional SMS + email, and a 24-hour reminder
@@ -18,7 +18,7 @@ docker run -d --name massage-booking-mongo -p 27021:27017 mongo:7
 
 # 3. Configure environment
 cp .env.example .env.local
-# edit .env.local — at minimum set MONGODB_URI, NEXTAUTH_SECRET, JWT_SECRET, CRON_SECRET
+# edit .env.local - at minimum set MONGODB_URI, NEXTAUTH_SECRET, JWT_SECRET, CRON_SECRET
 
 # 4. Seed the DB
 npm run seed
@@ -52,9 +52,9 @@ All vars are documented inline in `.env.example`. The 17 required keys:
 | Variable | Purpose |
 |----------|---------|
 | `MONGODB_URI` | Mongoose connection string |
-| `NEXTAUTH_SECRET` | NextAuth JWT signing — `openssl rand -base64 32` |
+| `NEXTAUTH_SECRET` | NextAuth JWT signing - `openssl rand -base64 32` |
 | `NEXTAUTH_URL` | Public origin (`http://localhost:3000` in dev) |
-| `JWT_SECRET` | Magic-link token signing — `openssl rand -base64 32` |
+| `JWT_SECRET` | Magic-link token signing - `openssl rand -base64 32` |
 | `SMS_ENABLED` | Master SMS kill-switch (`true` / `false`) |
 | `TWILIO_ACCOUNT_SID` | Twilio SID |
 | `TWILIO_AUTH_TOKEN` | Twilio auth token |
@@ -85,7 +85,7 @@ All vars are documented inline in `.env.example`. The 17 required keys:
 | `npm run dev` | Next.js dev server |
 | `npm run build` | Production build |
 | `npm run start` | Run the production build |
-| `npm run lint` | ESLint (incl. backend boundary rules — failures fail CI) |
+| `npm run lint` | ESLint (incl. backend boundary rules - failures fail CI) |
 | `npm run typecheck` | `tsc --noEmit` |
 | `npm run seed` | Idempotent seed (admin + 3 workers + 3 therapists + 4 services + settings) |
 | `npm run ensure-indexes` | Build every model's indexes against the live DB (run once after deploy) |
@@ -98,13 +98,13 @@ All vars are documented inline in `.env.example`. The 17 required keys:
 The backend is organized as a **self-contained, extractable module** under
 `src/backend/`. The folder is a candidate for being lifted into a standalone
 service later (Express/Fastify/NestJS, separate repo, etc.) with minimal
-rewriting — see "Extraction path" below.
+rewriting - see "Extraction path" below.
 
 ### Folder layout
 
 ```
 src/
-  app/                              # Next.js routes — THIN delegators only
+  app/                              # Next.js routes - THIN delegators only
     api/                            #   each route handler is < 20 lines
     (public)/                       # landing + booking + intake + manage + privacy + terms
     (auth)/                         # /login
@@ -115,24 +115,24 @@ src/
     not-found.tsx                   # 404 (on-brand)
     sitemap.ts                      # public sitemap
   backend/                          # SELF-CONTAINED, EXTRACTABLE
-    index.ts                        # public surface — re-exports controllers + types
+    index.ts                        # public surface - re-exports controllers + types
     controllers/                    # validate input → call services → return DTOs
-    services/                       # business logic — no HTTP, no framework
+    services/                       # business logic - no HTTP, no framework
     models/                         # Mongoose schemas + TS interfaces + DTO converters
     db/connection.ts                # cached Mongoose connection
     types/                          # DTOs + typed errors
     validation/                     # Zod input schemas
     __tests__/                      # backend test suite
-  components/                       # React UI — frontend only
-  emails/                           # Email templates — presentational, third-party-only imports
-  hooks/                            # React hooks — frontend only
+  components/                       # React UI - frontend only
+  emails/                           # Email templates - presentational, third-party-only imports
+  hooks/                            # React hooks - frontend only
   lib/                              # frontend helpers (cn, format, api-response, …)
   middleware.ts                     # NextAuth role gating for /admin and /portal
 scripts/
   seed.ts                           # idempotent seed (uses tsx)
   ensure-indexes.ts                 # builds Mongo indexes (uses tsx)
 public/
-  brand/                            # watercolor brand artwork
+  brand/                            # brand artwork
   therapists/                       # therapist photos (paste-only for v1)
   robots.txt
 ```
@@ -146,8 +146,8 @@ public/
 | **Controllers** (`backend/controllers/`) | Validate input via Zod, call services, return DTOs or throw. Never touches `Response`/`NextResponse`. | services, models, validation, types |
 | **Validation** (`backend/validation/`) | Zod input schemas, one per entity | `zod` |
 | **Public surface** (`backend/index.ts`) | Re-exports controllers + DTO types so route handlers can `import { bookingsController } from "@/backend"` | everything inside `backend/` |
-| **Next routes** (`app/api/.../route.ts`) | Parse request, call controller, map result/throws to HTTP — **target ≤ 20 lines** | `@/backend`, `@/lib/api-response` |
-| **Server actions** (`app/.../actions.ts`) | Same rule — thin wrapper around a controller call. Target ≤ 25 lines per action. | `@/backend`, `@/lib/staff-context`, `@/lib/action-result`, `@/auth` |
+| **Next routes** (`app/api/.../route.ts`) | Parse request, call controller, map result/throws to HTTP - **target ≤ 20 lines** | `@/backend`, `@/lib/api-response` |
+| **Server actions** (`app/.../actions.ts`) | Same rule - thin wrapper around a controller call. Target ≤ 25 lines per action. | `@/backend`, `@/lib/staff-context`, `@/lib/action-result`, `@/auth` |
 | **Email templates** (`src/emails/`) | Presentational HTML. Imported BY `email.service.ts`, never reach back into `backend/`. | `src/emails/`, third-party libs |
 
 ### Dependency rules (enforced by ESLint)
@@ -190,7 +190,7 @@ To lift the backend into a standalone service:
    handler is already < 20 lines, so this is a near-mechanical port.
 3. Replace the NextAuth wrapper in `src/auth.ts` and the Credentials provider
    `authorize` callback. The backend already exposes
-   `authController.verifyCredentials({ input })` — your replacement just
+   `authController.verifyCredentials({ input })` - your replacement just
    needs to call it.
 4. Replace the rate limiting in `src/lib/rate-limit.ts` (currently used by
    `/api/holds` and `/api/bookings`) with whatever your new framework
@@ -216,7 +216,7 @@ POST /api/bookings                                (≤ 20 lines)
        └─ bookingsService.createBooking
             ├─ verifyHold (consumes the hold on success)
             ├─ atomic claim-then-verify insert with overlap detection
-            ├─ sendBookingConfirmation (SMS + email — non-throwing)
+            ├─ sendBookingConfirmation (SMS + email - non-throwing)
             └─ returns BookingDTO (with manageToken)
 ```
 
@@ -244,7 +244,7 @@ resilience.
 2. Set every variable from `.env.example` in the Vercel project settings.
    - For `NEXTAUTH_URL`, use the Vercel-assigned domain.
    - For `RESEND_FROM_EMAIL`, use a verified domain (or
-     `onboarding@resend.dev` for sandbox testing — only delivers to the
+     `onboarding@resend.dev` for sandbox testing - only delivers to the
      account owner).
 3. The cron in `vercel.json` is registered automatically. Verify in Vercel's
    "Cron Jobs" tab after the first deploy.
@@ -277,12 +277,12 @@ npm run test:backend
 The backend test suite (17 tests, ~25 seconds with `--test-concurrency=1`)
 covers:
 
-- Availability slot generation (5 cases — empty day, existing-booking
+- Availability slot generation (5 cases - empty day, existing-booking
   exclusion, buffer behavior, missing therapist↔service link, inactive
   therapist)
-- Booking concurrency (2 cases — simultaneous double-book, sequential)
-- Hold TTL (2 cases — index definition + live Mongo expiry)
-- Integrations (8 cases — SMS + email dual-toggle gates, reminders idempotency,
+- Booking concurrency (2 cases - simultaneous double-book, sequential)
+- Hold TTL (2 cases - index definition + live Mongo expiry)
+- Integrations (8 cases - SMS + email dual-toggle gates, reminders idempotency,
   reminder window)
 
 Tests share a single Mongo at `MONGODB_URI` (with the path replaced by
@@ -296,9 +296,9 @@ suites use the same DB.
 - **Testimonials are hardcoded** in `src/app/(public)/page.tsx` (TODO marker
   in the file). A future phase can wire them up to a `Testimonial` model and
   expose CRUD in the admin portal.
-- **Therapist photos are paste-only** — admins paste a Cloudinary or
+- **Therapist photos are paste-only** - admins paste a Cloudinary or
   Vercel Blob URL into the `photoUrl` field. No upload widget yet.
-- **Privacy policy and Terms of service are starter templates** — search
+- **Privacy policy and Terms of service are starter templates** - search
   for `[LEGAL]` markers; review with counsel before going public.
 - **Hard-delete of therapists is intentionally unsupported.** The admin UI
   exposes Deactivate (sets `active = false`), which preserves existing
@@ -312,4 +312,4 @@ suites use the same DB.
 
 ## License
 
-Proprietary — © Vital Touch Massage. Internal use only.
+Proprietary - © Vital Touch Massage. Internal use only.

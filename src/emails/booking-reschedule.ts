@@ -8,7 +8,7 @@ import {
 
 export interface BookingRescheduleInput extends BookingFacts {
   manageUrl: string;
-  /** Original start time, formatted in business TZ — used for context only. */
+  /** Original start time, formatted in business TZ - used for context only. */
   previousWhenLong?: string;
 }
 

@@ -18,7 +18,7 @@ export default async function AdminTherapistsPage() {
         <div>
           <h1 className="font-display text-3xl text-coral-dark">Therapists</h1>
           <p className="text-sm text-ink/60">
-            Manage your therapy team — they appear on the public site when active.
+            Manage your therapy team - they appear on the public site when active.
           </p>
         </div>
         <Link href="/admin/therapists/new">

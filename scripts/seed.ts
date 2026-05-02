@@ -65,7 +65,7 @@ const SERVICES = [
   {
     name: "Thai Massage",
     description:
-      "Assisted stretching and rhythmic compressions on a comfortable mat — performed clothed, restorative for tight hips and shoulders.",
+      "Assisted stretching and rhythmic compressions on a comfortable mat - performed clothed, restorative for tight hips and shoulders.",
     durationMin: 90,
     price: 135,
   },
@@ -114,7 +114,7 @@ async function main() {
   console.log("[seed] connecting to MongoDB…");
   await connectDB();
 
-  // 1. Settings singleton — ensure default exists, then force brand + contact.
+  // 1. Settings singleton - ensure default exists, then force brand + contact.
   await ensureSettings();
   await SettingsModel.updateOne(
     {},
@@ -156,7 +156,7 @@ async function main() {
     { $set: { active: false } },
   ).exec();
 
-  // 3. Services — upsert by name. Update durationMin/price/description if the
+  // 3. Services - upsert by name. Update durationMin/price/description if the
   // service already exists (so re-seeding picks up catalog changes), but
   // preserve `active` so admins can deactivate without the seed flipping
   // them back.
@@ -188,7 +188,7 @@ async function main() {
     { $set: { active: false } },
   ).exec();
 
-  // 4. Therapists — upsert by name; refresh bio/specialties so re-seeding
+  // 4. Therapists - upsert by name; refresh bio/specialties so re-seeding
   // picks up edits.
   const workerHash = await hashPassword(WORKER_PASSWORD);
   const currentTherapistIds: Types.ObjectId[] = [];
@@ -230,7 +230,7 @@ async function main() {
       WEEKDAY_HOURS.map((h) => ({ therapistId: therapist._id, ...h })),
     );
 
-    // Service links — each therapist offers every active service.
+    // Service links - each therapist offers every active service.
     for (const svc of serviceDocs) {
       const exists = await TherapistServiceModel.exists({
         therapistId: therapist._id,

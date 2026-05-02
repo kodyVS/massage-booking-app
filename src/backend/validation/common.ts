@@ -22,7 +22,7 @@ export const isoDateSchema = z
 
 /**
  * Phone validation. Accepts either:
- *   - strict E.164 (`+15551234567`) — preferred, what the SMS service requires
+ *   - strict E.164 (`+15551234567`) - preferred, what the SMS service requires
  *   - or a loose 7–20 char fallback so an admin entering a booking on behalf
  *     of a customer with a partial number isn't blocked. The SMS service
  *     re-validates strictly before dispatching, so non-E.164 numbers

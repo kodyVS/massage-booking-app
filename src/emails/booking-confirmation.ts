@@ -15,7 +15,7 @@ export interface BookingConfirmationInput extends BookingFacts {
 export function renderBookingConfirmation(
   input: BookingConfirmationInput,
 ): { subject: string; html: string } {
-  const subject = `Your ${input.serviceName} is confirmed — ${input.whenLong}`;
+  const subject = `Your ${input.serviceName} is confirmed - ${input.whenLong}`;
 
   const intakeLine = input.intakeUrl
     ? `

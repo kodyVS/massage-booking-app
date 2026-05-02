@@ -5,7 +5,7 @@
  * during rendering of any route and shows an on-brand fallback.
  *
  * `global-error.tsx` is the last-resort fallback when the root layout itself
- * fails — this file handles everything else.
+ * fails - this file handles everything else.
  */
 import { useEffect } from "react";
 import Link from "next/link";
@@ -29,7 +29,7 @@ export default function ErrorBoundary({
       </p>
       <p className="mt-4 max-w-md text-ink/75">
         We hit an unexpected error. Try again, and if it keeps happening, give
-        us a call — we&apos;ll get you sorted.
+        us a call - we&apos;ll get you sorted.
       </p>
       {error.digest && (
         <p className="mt-2 text-xs text-ink/50">Reference: {error.digest}</p>

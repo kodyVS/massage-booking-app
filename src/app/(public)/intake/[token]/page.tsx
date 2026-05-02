@@ -12,7 +12,7 @@ import { IntakeForm } from "./intake-form";
 export const dynamic = "force-dynamic";
 
 /**
- * Public intake page — token-gated, no login required. The token is a JWT
+ * Public intake page - token-gated, no login required. The token is a JWT
  * minted by `tokens.service.generateIntakeToken(bookingId)` and sent in the
  * confirmation email when `settings.intakeRequired` is true.
  */

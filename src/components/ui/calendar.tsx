@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * Branded calendar primitive built on react-day-picker v9 — installed
+ * Branded calendar primitive built on react-day-picker v9 - installed
  * alongside the rest of our UI primitives. We don't pull in shadcn's
  * default calendar template because it ships its own Button etc. that
  * collide with our existing `<Button>` and the brand-themed styling here

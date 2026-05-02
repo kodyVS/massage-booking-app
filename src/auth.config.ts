@@ -2,7 +2,7 @@ import type { NextAuthConfig } from "next-auth";
 
 /**
  * Edge-safe NextAuth configuration. Contains the bits the middleware needs
- * (callbacks + pages) but NO providers — the credentials provider's
+ * (callbacks + pages) but NO providers - the credentials provider's
  * `authorize` function runs Mongoose, which Edge can't load.
  *
  * The full config in `src/auth.ts` extends this with the providers array;

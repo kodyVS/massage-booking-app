@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { authConfig } from "@/auth.config";
 
 /**
- * Build the edge-safe NextAuth instance from `authConfig` only — this file
+ * Build the edge-safe NextAuth instance from `authConfig` only - this file
  * runs in Edge runtime, which can't load Mongoose / Node built-ins. The
  * full Node-runtime instance lives in `src/auth.ts` for use by route
  * handlers and server actions.

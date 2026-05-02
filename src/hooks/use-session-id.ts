@@ -5,7 +5,7 @@ import { useSyncExternalStore } from "react";
 const KEY = "vt:sessionId";
 
 function subscribe(): () => void {
-  // Session id is generated once and never changes within a tab — no need to
+  // Session id is generated once and never changes within a tab - no need to
   // subscribe to anything. Return a no-op unsubscribe.
   return () => {};
 }
@@ -13,7 +13,7 @@ function subscribe(): () => void {
 /**
  * `crypto.randomUUID` is only exposed in secure contexts (HTTPS, localhost,
  * 127.0.0.1). When the dev server is accessed over a LAN/Tailscale IP, it
- * is undefined. Fall back to a non-cryptographic pseudo-random id — the
+ * is undefined. Fall back to a non-cryptographic pseudo-random id - the
  * session id only needs to be unique per tab for hold ownership, not
  * unguessable.
  */

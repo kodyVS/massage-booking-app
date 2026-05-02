@@ -70,7 +70,7 @@ export default async function PrivacyPage() {
       <Section title="Who we share it with">
         <p>
           We do not sell your information. We share it only with the service
-          providers required to run the booking platform — our hosting
+          providers required to run the booking platform - our hosting
           provider, transactional SMS provider (Twilio), transactional email
           provider (Resend), and database provider (MongoDB Atlas). Each
           handles your data under their own privacy commitments.
@@ -93,7 +93,7 @@ export default async function PrivacyPage() {
             <strong>SMS opt-out</strong>: reply STOP to any booking message.
           </li>
           <li>
-            <strong>Email opt-out</strong>: contact us — note that
+            <strong>Email opt-out</strong>: contact us - note that
             booking-related email (confirmation, reminder, cancellation) is
             transactional and required to use the service.
           </li>

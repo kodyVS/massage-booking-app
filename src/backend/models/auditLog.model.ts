@@ -2,7 +2,7 @@ import { Schema, model, models, type Model, type Types } from "mongoose";
 
 /**
  * Append-only log of every write action by an authenticated user (admin or
- * worker). Public booking flow writes are NOT recorded here — those carry
+ * worker). Public booking flow writes are NOT recorded here - those carry
  * no actor identity. `before` / `after` are JSON snapshots for diffing.
  */
 export interface IAuditLog {

@@ -1,7 +1,7 @@
 import { Schema, model, models, type Model, type Types } from "mongoose";
 
 /**
- * Customer intake form. Optional — only filled out via the magic-link intake
+ * Customer intake form. Optional - only filled out via the magic-link intake
  * page after booking is created. `signedAt` is the timestamp the customer
  * submitted the form (their digital signature).
  */
@@ -109,7 +109,7 @@ const BookingSchema = new Schema<IBooking>(
   { timestamps: true },
 );
 
-// Compound index — overlap queries always filter by therapistId then by time.
+// Compound index - overlap queries always filter by therapistId then by time.
 BookingSchema.index({ therapistId: 1, startAt: 1 });
 // Helper for queries like "all upcoming bookings for a therapist".
 BookingSchema.index({ therapistId: 1, status: 1, startAt: 1 });

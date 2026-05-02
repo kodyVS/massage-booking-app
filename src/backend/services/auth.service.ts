@@ -23,7 +23,7 @@ export async function hashPassword(plaintext: string): Promise<string> {
 /**
  * Validate a login attempt. Returns the user DTO on success; throws
  * UnauthorizedError on any failure (wrong email, wrong password, deactivated
- * account). NextAuth's credentials provider wraps this — there is no
+ * account). NextAuth's credentials provider wraps this - there is no
  * NextAuth import inside the backend module.
  */
 export async function verifyCredentials(

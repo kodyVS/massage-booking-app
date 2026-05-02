@@ -16,7 +16,7 @@ export default async function BookIndexPage() {
           Book a session
         </h1>
         <p className="mt-3 text-ink/80">
-          Pick the service you&apos;re after — we&apos;ll show you every open
+          Pick the service you&apos;re after - we&apos;ll show you every open
           time and which therapist can take it.
         </p>
       </header>

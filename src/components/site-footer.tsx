@@ -20,7 +20,7 @@ export function SiteFooter({ businessName, businessPhone, businessAddress }: Pro
             {businessName}
           </h3>
           <p className="mt-2 text-sm text-ink/80">
-            Therapeutic massage in a calm, watercolor space.
+            Therapeutic massage in a calm, welcoming space.
           </p>
         </div>
         <div className="text-sm text-ink/80">

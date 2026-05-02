@@ -44,7 +44,7 @@ export interface RequestContext {
   bookingToken?: string;
   /** When the worker context is for a specific therapist (their own). */
   therapistId?: string;
-  /** Client IP, when available — used for rate limiting / Turnstile. */
+  /** Client IP, when available - used for rate limiting / Turnstile. */
   ip?: string;
 }
 

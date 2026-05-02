@@ -4,7 +4,7 @@
  * inside the same window is a no-op.
  *
  * Vercel Cron hits `/api/cron/reminders` every 15 min. Each fire scans the
- * 23.5–24.5h window — that 60-minute span overlaps with the next 4 cron
+ * 23.5–24.5h window - that 60-minute span overlaps with the next 4 cron
  * fires, so we always have multiple chances to catch a booking before it
  * leaves the window. We only send once per booking (the `reminderSentAt`
  * stamp + the query filter together guarantee that).
@@ -31,7 +31,7 @@ export interface RemindersResult {
  * Send reminders for any confirmed booking starting in the 23.5–24.5h
  * window with `reminderSentAt` not set yet. Stamps `reminderSentAt` after
  * dispatch attempt so it never double-sends, even if either provider
- * returned a non-fatal error (we don't retry — the customer would receive
+ * returned a non-fatal error (we don't retry - the customer would receive
  * a duplicate next cron tick otherwise).
  */
 export async function sendDueReminders(
@@ -55,7 +55,7 @@ export async function sendDueReminders(
 
   for (const booking of due) {
     // Stamp BEFORE sending so concurrent cron runs (rare but possible) won't
-    // double-send. If sending fails, the booking is still marked — we accept
+    // double-send. If sending fails, the booking is still marked - we accept
     // a missed reminder over a duplicate.
     booking.reminderSentAt = new Date();
     await booking.save();

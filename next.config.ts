@@ -18,7 +18,7 @@ const nextConfig: NextConfig = {
     ],
   },
   // Mongoose's native bindings + dynamic require should not be bundled by
-  // the Server Components compiler — keep them external.
+  // the Server Components compiler - keep them external.
   serverExternalPackages: ["mongoose", "@mapbox/node-pre-gyp"],
 };
 

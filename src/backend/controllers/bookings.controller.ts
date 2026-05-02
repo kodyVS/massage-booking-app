@@ -120,7 +120,7 @@ function requireStaff(context: RequestContext | undefined): void {
 
 /**
  * Returns an .ics calendar payload for a booking. Token-gated for the public
- * "Add to calendar" download — pass the booking's manageToken.
+ * "Add to calendar" download - pass the booking's manageToken.
  */
 export async function getICS({
   input,

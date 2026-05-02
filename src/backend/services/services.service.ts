@@ -74,7 +74,7 @@ export async function createService(
       })),
       { ordered: false },
     ).catch(() => {
-      /* duplicates ignored — caller may have repeated ids */
+      /* duplicates ignored - caller may have repeated ids */
     });
   }
 

@@ -3,7 +3,7 @@ import type { MetadataRoute } from "next";
 /**
  * Public-only sitemap. Authenticated routes (/admin, /portal), token-gated
  * routes (/manage, /intake), and mid-flow booking pages (/book/confirm,
- * /book/success) are intentionally excluded — see public/robots.txt for the
+ * /book/success) are intentionally excluded - see public/robots.txt for the
  * matching `Disallow` rules.
  */
 export default function sitemap(): MetadataRoute.Sitemap {

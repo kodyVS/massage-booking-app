@@ -1,12 +1,12 @@
 /**
- * SMS service — thin Twilio wrapper with the dual-toggle gate from
+ * SMS service - thin Twilio wrapper with the dual-toggle gate from
  * `TEAM_PROMPT.md`:
  *
  *   process.env.SMS_ENABLED === "true"  AND  settings.smsNotificationsEnabled
  *
  * Both must be true to send. Either being false is a clean no-op + log.
  *
- * Errors from Twilio are caught and logged — booking create / cancel /
+ * Errors from Twilio are caught and logged - booking create / cancel /
  * reschedule must never fail because the SMS provider blew up.
  */
 import { formatInTimeZone } from "date-fns-tz";
@@ -54,25 +54,25 @@ export async function sendSms(
   settings: SettingsDTO,
 ): Promise<{ sent: boolean; reason?: string }> {
   if (!envEnabled()) {
-    console.info("[sms] skipped — SMS_ENABLED is not 'true'");
+    console.info("[sms] skipped - SMS_ENABLED is not 'true'");
     return { sent: false, reason: "env-disabled" };
   }
   if (!settings.smsNotificationsEnabled) {
-    console.info("[sms] skipped — settings.smsNotificationsEnabled is false");
+    console.info("[sms] skipped - settings.smsNotificationsEnabled is false");
     return { sent: false, reason: "settings-disabled" };
   }
   if (!E164.test(to)) {
-    console.warn(`[sms] skipped — invalid E.164 number "${to}"`);
+    console.warn(`[sms] skipped - invalid E.164 number "${to}"`);
     return { sent: false, reason: "invalid-number" };
   }
   const from = fromNumber();
   if (!from) {
-    console.warn("[sms] skipped — TWILIO_FROM_NUMBER is not set");
+    console.warn("[sms] skipped - TWILIO_FROM_NUMBER is not set");
     return { sent: false, reason: "no-from-number" };
   }
   const client = getClient();
   if (!client) {
-    console.warn("[sms] skipped — Twilio credentials not configured");
+    console.warn("[sms] skipped - Twilio credentials not configured");
     return { sent: false, reason: "no-credentials" };
   }
   try {

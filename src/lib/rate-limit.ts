@@ -7,7 +7,7 @@ import { Redis } from "@upstash/redis";
  * Uses Upstash Redis when `UPSTASH_REDIS_REST_URL` + `UPSTASH_REDIS_REST_TOKEN`
  * are set. In local dev (or when Upstash is not configured) it falls back to a
  * process-local in-memory limiter so the developer can still verify the gate
- * without standing up a Redis instance. This fallback is per-process — fine
+ * without standing up a Redis instance. This fallback is per-process - fine
  * for dev, useless in serverless prod, which is exactly what we want
  * (configure Upstash before going live).
  */
@@ -57,7 +57,7 @@ if (url && token) {
 
 /**
  * Best-effort client IP extraction. Vercel sets `x-forwarded-for`; local dev
- * may have nothing — fall back to a stable string so dev still rate-limits.
+ * may have nothing - fall back to a stable string so dev still rate-limits.
  */
 export function clientIpFrom(headers: Headers): string {
   const fwd = headers.get("x-forwarded-for");

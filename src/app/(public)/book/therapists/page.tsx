@@ -22,7 +22,7 @@ export default async function BrowseByTherapistPage() {
           Browse our therapists
         </h1>
         <p className="text-ink/80">
-          Pick a therapist below — or let us find the earliest opening across
+          Pick a therapist below - or let us find the earliest opening across
           our team.
         </p>
       </header>

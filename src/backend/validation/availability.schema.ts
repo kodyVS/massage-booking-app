@@ -11,7 +11,7 @@ export type ListAvailableSlotsInput = z.infer<typeof listAvailableSlotsSchema>;
 
 export const firstAvailableAcrossTherapistsSchema = z.object({
   serviceId: objectIdSchema,
-  /** Optional starting date — defaults to today. */
+  /** Optional starting date - defaults to today. */
   fromDate: isoDateSchema.optional(),
   /** How many days forward to scan. */
   daysAhead: z.number().int().min(1).max(60).default(14),

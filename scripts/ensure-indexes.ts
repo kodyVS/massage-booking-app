@@ -6,14 +6,14 @@
  *   npx tsx scripts/ensure-indexes.ts
  *
  * Mongoose's autoIndex defaults to `true` in dev but should be off in
- * production for performance — this script is the explicit, opt-in path.
+ * production for performance - this script is the explicit, opt-in path.
  *
  * Safe to re-run: `createIndexes()` is idempotent. Existing indexes are
  * preserved; missing ones are added; conflicting definitions throw.
  *
  * NOTE: this script imports directly from `src/backend/models/*` because
  * indexes are a model-layer concern (not a service-layer concern). The
- * eslint boundary rule explicitly allows `scripts/` to do so — see
+ * eslint boundary rule explicitly allows `scripts/` to do so - see
  * `eslint.config.mjs` (`boundaries/include` is scoped to `src/**`).
  */
 import { config as loadEnv } from "dotenv";
@@ -51,7 +51,7 @@ const MODELS = [
 
 async function main(): Promise<void> {
   await connectDB();
-  console.info("[ensure-indexes] connected — building indexes…");
+  console.info("[ensure-indexes] connected - building indexes…");
 
   let failed = 0;
   for (const [name, model] of MODELS) {

@@ -30,7 +30,7 @@ export default async function BookServicePage({
   }
   if (!service.active) notFound();
 
-  // Therapists who can perform this service — used by the picker to render
+  // Therapists who can perform this service - used by the picker to render
   // names alongside available time slots.
   const [therapists, settings] = await Promise.all([
     therapistsController.list({

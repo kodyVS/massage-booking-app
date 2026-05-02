@@ -67,8 +67,8 @@ export default async function AdminBookingsPage({
                   key={b.id}
                   booking={b}
                   tz={settings.businessTimezone}
-                  therapistName={therapistMap.get(b.therapistId) ?? "—"}
-                  serviceName={serviceMap.get(b.serviceId) ?? "—"}
+                  therapistName={therapistMap.get(b.therapistId) ?? "-"}
+                  serviceName={serviceMap.get(b.serviceId) ?? "-"}
                 />
               ))}
             </tbody>

@@ -3,9 +3,9 @@ import { Schema, model, models, type Model, type Types } from "mongoose";
 /**
  * A range of UTC time during which a therapist is unavailable. Created by the
  * worker (or by the admin); admin can approve/reject. Status:
- *   - `pending`   — submitted by worker, awaiting admin approval
- *   - `approved`  — counts against availability
- *   - `rejected`  — does not count against availability
+ *   - `pending`   - submitted by worker, awaiting admin approval
+ *   - `approved`  - counts against availability
+ *   - `rejected`  - does not count against availability
  */
 export interface ITimeOff {
   _id: Types.ObjectId;

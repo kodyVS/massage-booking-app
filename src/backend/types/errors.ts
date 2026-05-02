@@ -8,7 +8,7 @@
  * `src/lib/api-response.ts` so the route layer knows how to map it.
  */
 
-/** Base class — every backend error extends this so callers can `instanceof` check. */
+/** Base class - every backend error extends this so callers can `instanceof` check. */
 export class BackendError extends Error {
   /** Stable string code, useful for client-side branching. */
   public readonly code: string;
@@ -34,14 +34,14 @@ export class NotFoundError extends BackendError {
   }
 }
 
-/** Conflicting state — e.g. double-booked slot, duplicate email (409). */
+/** Conflicting state - e.g. double-booked slot, duplicate email (409). */
 export class ConflictError extends BackendError {
   constructor(message = "Conflict", details?: unknown) {
     super("CONFLICT", message, details);
   }
 }
 
-/** Input validation failed — Zod issues, malformed payloads (400). */
+/** Input validation failed - Zod issues, malformed payloads (400). */
 export class ValidationError extends BackendError {
   constructor(message = "Invalid input", details?: unknown) {
     super("VALIDATION_ERROR", message, details);

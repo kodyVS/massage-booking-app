@@ -37,7 +37,7 @@ export interface CustomerDetailDTO {
 }
 
 /**
- * Customers are derived from booking records — there is no Customer collection.
+ * Customers are derived from booking records - there is no Customer collection.
  * Group by lowercased email; pick the most recent booking's name + phone as
  * canonical (so updates ripple through automatically).
  */

@@ -82,7 +82,7 @@ export function ManageBookingActions({
       setView("idle");
       router.refresh();
     } catch {
-      setError("Network error — please retry.");
+      setError("Network error - please retry.");
     } finally {
       setBusy(false);
     }
@@ -104,7 +104,7 @@ export function ManageBookingActions({
       setView("idle");
       router.refresh();
     } catch {
-      setError("Network error — please retry.");
+      setError("Network error - please retry.");
     } finally {
       setBusy(false);
     }

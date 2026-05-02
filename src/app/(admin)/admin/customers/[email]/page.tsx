@@ -66,7 +66,7 @@ export default async function CustomerDetailPage({
                     {sName.get(b.serviceId) ?? "Service"}
                   </Link>
                   <p className="text-xs text-ink/55">
-                    {formatDateTime(b.startAt, tz)} · {tName.get(b.therapistId) ?? "—"}
+                    {formatDateTime(b.startAt, tz)} · {tName.get(b.therapistId) ?? "-"}
                   </p>
                 </div>
                 <Badge tone={b.status === "completed" ? "success" : b.status === "cancelled" ? "danger" : "info"}>

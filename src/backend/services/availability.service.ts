@@ -37,7 +37,7 @@ interface Interval {
  *   3. Subtract: (a) approved time off, (b) existing pending/confirmed
  *      bookings + buffer, (c) active holds.
  *   4. Drop slots in the past.
- *   5. Return UTC ISO strings — frontend formats in business TZ.
+ *   5. Return UTC ISO strings - frontend formats in business TZ.
  */
 export async function getAvailableSlots(
   input: ListAvailableSlotsInput,

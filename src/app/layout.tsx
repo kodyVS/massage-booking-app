@@ -17,7 +17,7 @@ const fraunces = Fraunces({
 const SITE_URL = process.env.NEXTAUTH_URL || "http://localhost:3000";
 const SITE_NAME = "Vital Touch Massage";
 const SITE_DESC =
-  "Therapeutic massage in a calm, watercolor space. Book Relaxation, Deep Tissue, Thai, and Stress Relief sessions in under two minutes — pay at your visit.";
+  "Therapeutic massage in a calm, welcoming space. Book Relaxation, Deep Tissue, Thai, and Stress Relief sessions in under two minutes - pay at your visit.";
 
 export const metadata: Metadata = {
   metadataBase: new URL(SITE_URL),

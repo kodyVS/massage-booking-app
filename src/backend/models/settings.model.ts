@@ -5,7 +5,7 @@ import { Schema, model, models, type Model, type Types } from "mongoose";
  * this collection; the settings service uses `findOne()` and `upsert` rather
  * than ids.
  *
- * - `defaultDaysOpen`: 0 (Sun) – 6 (Sat) — days the business is open by
+ * - `defaultDaysOpen`: 0 (Sun) – 6 (Sat) - days the business is open by
  *   default for therapists who don't have explicit working hours
  * - `slotIntervalMin`: granularity of bookable slots (e.g. 15 → :00, :15, …)
  * - `bufferMin`: minimum gap between bookings on the same therapist

@@ -6,7 +6,7 @@
  *
  * @example
  * match(["bookings", "abc123"], "bookings/:id") // { id: "abc123" }
- * match(["bookings", "ics"], "bookings/:id")    // { id: "ics" } — order matters
+ * match(["bookings", "ics"], "bookings/:id")    // { id: "ics" } - order matters
  * match(["bookings"], "bookings")               // {}
  */
 export function match(

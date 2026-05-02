@@ -22,7 +22,7 @@ const DEFAULT_HOLD_TTL_MIN = 10;
  * another active hold (different sessionId) or a confirmed/pending booking
  * already overlaps the requested window.
  *
- * The hold's `expiresAt` drives Mongo's TTL index — even if the server
+ * The hold's `expiresAt` drives Mongo's TTL index - even if the server
  * crashes, the document is auto-removed.
  */
 export async function createHold(
@@ -102,7 +102,7 @@ export async function releaseHold(input: ReleaseHoldInput): Promise<void> {
     sessionId,
   }).exec();
   if (result.deletedCount === 0) {
-    // Not found OR sessionId mismatch — tell the caller it's gone either way.
+    // Not found OR sessionId mismatch - tell the caller it's gone either way.
     throw new NotFoundError("Hold not found");
   }
 }

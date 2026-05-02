@@ -3,7 +3,7 @@ import { ValidationError } from "../types/errors";
 
 interface ManageTokenPayload {
   bookingId: string;
-  /** Discriminator — `manage` for booking management, `intake` for intake forms. */
+  /** Discriminator - `manage` for booking management, `intake` for intake forms. */
   kind: "manage" | "intake";
 }
 
@@ -18,7 +18,7 @@ function getSecret(): string {
 /**
  * Sign a long-lived booking management token. The token is embedded in the
  * "Manage your booking" magic link emailed to the customer. It does not
- * expire — the server checks the booking is still active when it's used.
+ * expire - the server checks the booking is still active when it's used.
  */
 export function generateManageToken(bookingId: string): string {
   return jwt.sign(

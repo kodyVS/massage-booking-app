@@ -1,7 +1,7 @@
 import { Schema, model, models, type Model, type Types } from "mongoose";
 
 /**
- * User account — admin or worker.
+ * User account - admin or worker.
  *
  * Customers do NOT have user accounts (the public booking flow uses email +
  * a magic-link manage token instead). Only staff log in.
@@ -20,7 +20,7 @@ export interface IUser {
   updatedAt: Date;
 }
 
-/** Plain DTO returned to callers — never includes passwordHash. */
+/** Plain DTO returned to callers - never includes passwordHash. */
 export interface UserDTO {
   id: string;
   email: string;

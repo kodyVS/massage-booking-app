@@ -1,5 +1,5 @@
 /**
- * Test helpers — load env, point at a dedicated test DB, and provide a
+ * Test helpers - load env, point at a dedicated test DB, and provide a
  * helper that resets all collections between tests.
  */
 
@@ -61,7 +61,7 @@ export async function resetDb(): Promise<void> {
 }
 
 /**
- * Force-create indexes (TTL, unique, compound) — needed because Mongoose's
+ * Force-create indexes (TTL, unique, compound) - needed because Mongoose's
  * default index creation is async and may race with the first test.
  */
 export async function ensureIndexes(): Promise<void> {

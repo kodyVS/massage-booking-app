@@ -6,7 +6,7 @@ export const dynamic = "force-dynamic";
 export default async function AdminSettingsPage() {
   const settings = await settingsController.get();
   // Read the env-level integration toggles. When false, the Settings UI
-  // disables the corresponding switch with explanatory text — the env flag
+  // disables the corresponding switch with explanatory text - the env flag
   // is the master kill-switch (Phase 4 wiring requires both env and settings
   // to send notifications).
   const smsEnabledByEnv = process.env.SMS_ENABLED === "true";

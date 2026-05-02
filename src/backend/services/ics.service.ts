@@ -15,7 +15,7 @@ interface BuildIcsInput {
  * Build an .ics calendar payload for a confirmed booking. Returned tuple is
  * `{ filename, body }` where `body` is the raw ICS text.
  *
- * The `ics` package validates input strictly — we feed it UTC date components
+ * The `ics` package validates input strictly - we feed it UTC date components
  * extracted from the booking's `startAt` ISO string.
  */
 export function buildBookingIcs({

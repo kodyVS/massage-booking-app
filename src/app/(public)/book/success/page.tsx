@@ -98,7 +98,7 @@ export default async function BookingSuccessPage({
         <p>
           A confirmation email is on its way to{" "}
           <span className="font-medium">{booking.customerEmail}</span>. Save the
-          &ldquo;Manage your booking&rdquo; link above — you&apos;ll need it to
+          &ldquo;Manage your booking&rdquo; link above - you&apos;ll need it to
           reschedule or cancel.
         </p>
         <p className="mt-3 text-xs text-ink/60">

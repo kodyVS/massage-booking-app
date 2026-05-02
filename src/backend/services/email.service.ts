@@ -1,12 +1,12 @@
 /**
- * Email service — thin Resend wrapper with the dual-toggle gate from
+ * Email service - thin Resend wrapper with the dual-toggle gate from
  * `TEAM_PROMPT.md`:
  *
  *   process.env.EMAIL_ENABLED === "true"  AND  settings.emailNotificationsEnabled
  *
  * Both must be true to send. Either being false is a clean no-op + log.
  *
- * Errors from Resend are caught and logged — booking creation must never
+ * Errors from Resend are caught and logged - booking creation must never
  * fail because the email provider blew up.
  *
  * Templates live under `src/emails/` (presentational, brand-styled HTML
@@ -82,22 +82,22 @@ export async function sendEmail(
   settings: SettingsDTO,
 ): Promise<{ sent: boolean; reason?: string }> {
   if (!envEnabled()) {
-    console.info("[email] skipped — EMAIL_ENABLED is not 'true'");
+    console.info("[email] skipped - EMAIL_ENABLED is not 'true'");
     return { sent: false, reason: "env-disabled" };
   }
   if (!settings.emailNotificationsEnabled) {
     console.info(
-      "[email] skipped — settings.emailNotificationsEnabled is false",
+      "[email] skipped - settings.emailNotificationsEnabled is false",
     );
     return { sent: false, reason: "settings-disabled" };
   }
   if (!input.to || !input.to.includes("@")) {
-    console.warn(`[email] skipped — invalid recipient "${input.to}"`);
+    console.warn(`[email] skipped - invalid recipient "${input.to}"`);
     return { sent: false, reason: "invalid-recipient" };
   }
   const client = getClient();
   if (!client) {
-    console.warn("[email] skipped — RESEND_API_KEY not configured");
+    console.warn("[email] skipped - RESEND_API_KEY not configured");
     return { sent: false, reason: "no-api-key" };
   }
   try {

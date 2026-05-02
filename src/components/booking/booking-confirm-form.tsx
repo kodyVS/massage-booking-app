@@ -149,7 +149,7 @@ export function BookingConfirmForm({
     if (submitting) return;
     setSubmitError(null);
     if (countdown.expired) {
-      setSubmitError("Your hold expired — please pick a new time.");
+      setSubmitError("Your hold expired - please pick a new time.");
       return;
     }
     if (!turnstileToken) {
@@ -206,10 +206,10 @@ export function BookingConfirmForm({
         setTurnstileToken("");
         return;
       }
-      // success — redirect to /book/success?token=…
+      // success - redirect to /book/success?token=…
       router.push(`/book/success?token=${data.data.manageToken}`);
     } catch {
-      setSubmitError("Network error — please retry.");
+      setSubmitError("Network error - please retry.");
     } finally {
       setSubmitting(false);
     }

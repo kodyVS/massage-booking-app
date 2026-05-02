@@ -17,7 +17,7 @@ import boundaries from "eslint-plugin-boundaries";
  *      reach into `src/backend/services/**` or `src/backend/models/**`.
  *
  * The `no-restricted-imports` rule below is a redundant guardrail
- * specifically for `next/*` and `next-auth` — `eslint-plugin-boundaries`
+ * specifically for `next/*` and `next-auth` - `eslint-plugin-boundaries`
  * handles the cross-element rules; `no-restricted-imports` handles
  * specific package patterns that boundaries can't express.
  */
@@ -27,7 +27,7 @@ const eslintConfig = defineConfig([
   ...nextTs,
 
   // -------------------------------------------------------------------------
-  // Boundary rules — applied to all source files.
+  // Boundary rules - applied to all source files.
   // -------------------------------------------------------------------------
   {
     plugins: { boundaries },
@@ -63,7 +63,7 @@ const eslintConfig = defineConfig([
     },
     rules: {
       // Rule (1): backend folder may only import from itself.
-      // Rules (2)+(3): frontend may import from backend public surface only —
+      // Rules (2)+(3): frontend may import from backend public surface only -
       // never directly from services or models.
       "boundaries/element-types": [
         "error",
@@ -98,7 +98,7 @@ const eslintConfig = defineConfig([
               message:
                 "Import from '@/backend' (the public surface) instead of reaching into src/backend/{services,models,controllers,db,validation}/* directly.",
             },
-            // `src/lib` is frontend-only — must not pull in backend internals.
+            // `src/lib` is frontend-only - must not pull in backend internals.
             {
               from: ["lib"],
               disallow: [
@@ -112,7 +112,7 @@ const eslintConfig = defineConfig([
                 "src/lib is frontend-only. If you need backend logic, expose it via @/backend.",
             },
             // `src/emails/` is presentational + portable. Templates may only
-            // import from themselves and third-party libs — never from any
+            // import from themselves and third-party libs - never from any
             // app/component/hook/lib/backend internal. The email service
             // (a backend service) imports the templates, not the other way.
             {

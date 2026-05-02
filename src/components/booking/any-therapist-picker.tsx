@@ -38,7 +38,7 @@ export function AnyTherapistPicker({ services, therapists, tz }: Props) {
         setError(data.error?.message ?? "Could not find an opening.");
       }
     } catch {
-      setError("Network error — please retry.");
+      setError("Network error - please retry.");
     } finally {
       setLoading(false);
     }

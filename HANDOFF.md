@@ -5,7 +5,7 @@ when their phase completes. **Read this top-to-bottom before you start.**
 
 ---
 
-## Phase 0 — Architect ✅ (this commit)
+## Phase 0 - Architect ✅ (this commit)
 
 ### What I built
 
@@ -17,85 +17,85 @@ is satisfied; `npm run dev`, `npm run build`, `npm run lint`, and
 ### Files created / touched
 
 **Project root**
-- `package.json` — all runtime + dev deps from the spec installed (mongoose,
+- `package.json` - all runtime + dev deps from the spec installed (mongoose,
   next-auth@beta, bcryptjs, zod, react-hook-form, @hookform/resolvers,
   date-fns, date-fns-tz, jsonwebtoken, twilio, resend, ics,
   @upstash/ratelimit, @upstash/redis, @marsidev/react-turnstile,
   eslint-plugin-boundaries, plus `tsx`, `eslint-import-resolver-typescript`,
   `clsx`/`tailwind-merge`/`class-variance-authority`/`lucide-react` for
   shadcn/ui readiness). New script: `npm run typecheck`.
-- `tsconfig.json` — `@/*` and `@/backend/*` path aliases.
-- `next.config.ts` — `images.remotePatterns` for Cloudinary + Vercel Blob;
+- `tsconfig.json` - `@/*` and `@/backend/*` path aliases.
+- `next.config.ts` - `images.remotePatterns` for Cloudinary + Vercel Blob;
   `serverExternalPackages` for `mongoose`.
-- `tailwind.config.ts` — brand palette + font tokens (Tailwind v4 actually
+- `tailwind.config.ts` - brand palette + font tokens (Tailwind v4 actually
   reads from `globals.css` `@theme`; this file is for IDE/spec compliance).
-- `postcss.config.mjs` — unchanged from `create-next-app` (Tailwind v4 plugin).
-- `eslint.config.mjs` — boundary rules via `eslint-plugin-boundaries` + a
+- `postcss.config.mjs` - unchanged from `create-next-app` (Tailwind v4 plugin).
+- `eslint.config.mjs` - boundary rules via `eslint-plugin-boundaries` + a
   `no-restricted-imports` block forbidding `next/*` and `next-auth` inside
   `src/backend/**`. Uses `eslint-import-resolver-typescript` so `@/...`
   aliases resolve correctly when checking element types.
-- `.env.example` — all 17 required env vars with inline comments.
-- `.gitignore` — added `!.env.example` so the example file is tracked.
-- `vercel.json` — cron job placeholder pointing at
+- `.env.example` - all 17 required env vars with inline comments.
+- `.gitignore` - added `!.env.example` so the example file is tracked.
+- `vercel.json` - cron job placeholder pointing at
   `/api/cron/reminders` every 15 min.
-- `components.json` — shadcn/ui config (style "new-york", `@/components/ui`,
+- `components.json` - shadcn/ui config (style "new-york", `@/components/ui`,
   `@/lib/cn` as the `cn` import).
 
 **`src/`**
-- `src/app/layout.tsx` — Fraunces (`--font-fraunces`) + Inter
+- `src/app/layout.tsx` - Fraunces (`--font-fraunces`) + Inter
   (`--font-inter`) wired through `next/font/google`. Body uses brand
   `bg-cream text-ink`.
-- `src/app/globals.css` — Tailwind v4 `@theme` block defining `--color-coral`,
+- `src/app/globals.css` - Tailwind v4 `@theme` block defining `--color-coral`,
   `--color-coral-dark`, `--color-periwinkle`, `--color-blush`, `--color-cream`,
   `--color-ink`, plus `--font-sans`, `--font-serif`, `--font-display`. Global
   periwinkle `:focus-visible` outline for accessibility (Phase 0 satisfies
   the "visible focus state" checklist item up front).
-- `src/app/(public)/page.tsx` — placeholder homepage; renders brand colors so
+- `src/app/(public)/page.tsx` - placeholder homepage; renders brand colors so
   Tailwind utilities (`bg-coral`, `bg-cream`, `text-ink`, `font-display`) are
   known to compile. Phase 2 replaces this with the real landing.
 - `src/app/(auth)/login/page.tsx`, `src/app/(admin)/admin/page.tsx`,
-  `src/app/(portal)/portal/page.tsx` — placeholder route group entries so the
+  `src/app/(portal)/portal/page.tsx` - placeholder route group entries so the
   middleware matchers + role groupings exist. Phase 1/3 replace.
 - `src/app/api/{bookings,bookings/[id],holds,holds/[id],availability,therapists,services,schedules,settings,intake/[token],cron/reminders}/`
-  — empty directories ready for Phase 1+ to drop in `route.ts` files.
+  - empty directories ready for Phase 1+ to drop in `route.ts` files.
   `src/app/api/.gitkeep` documents the thin-delegator convention.
-- `src/middleware.ts` — pass-through skeleton; matcher targets
+- `src/middleware.ts` - pass-through skeleton; matcher targets
   `/admin/:path*` and `/portal/:path*`. The Phase 1 wiring sketch is in a
   reference comment block.
 
 **`src/backend/`** (the isolated, extractable backend module)
-- `src/backend/index.ts` — public surface. Re-exports `connectDB`,
+- `src/backend/index.ts` - public surface. Re-exports `connectDB`,
   `disconnectDB`, all error classes, and the `RequestContext` /
   `ControllerInput` helper types. Controller re-exports are commented for
   Phase 1 to uncomment as it wires each one in.
-- `src/backend/db/connection.ts` — `connectDB()` with a `globalThis.__mongooseCache`
+- `src/backend/db/connection.ts` - `connectDB()` with a `globalThis.__mongooseCache`
   so the connection survives serverless cold-starts and dev hot-reloads.
   Throws a clear error if `MONGODB_URI` is missing. Also exports
   `disconnectDB()` for tests / scripts.
-- `src/backend/types/errors.ts` — `BackendError` base + `NotFoundError`,
+- `src/backend/types/errors.ts` - `BackendError` base + `NotFoundError`,
   `ConflictError`, `ValidationError`, `UnauthorizedError`, `ForbiddenError`.
   Each carries a stable string `code` and optional `details` payload.
-- `src/backend/types/index.ts` — `RequestContext` and `ControllerInput<T>`
+- `src/backend/types/index.ts` - `RequestContext` and `ControllerInput<T>`
   types that controllers should use uniformly.
-- `src/backend/{controllers,services,models,validation}/.gitkeep` — each
+- `src/backend/{controllers,services,models,validation}/.gitkeep` - each
   contains a one-paragraph reminder of the layer's responsibility so
   downstream agents have context inline.
 
 **`src/lib/`**
-- `src/lib/api-response.ts` — single helper that maps backend typed errors
+- `src/lib/api-response.ts` - single helper that maps backend typed errors
   to HTTP status codes (`ValidationError → 400`, `UnauthorizedError → 401`,
   `ForbiddenError → 403`, `NotFoundError → 404`, `ConflictError → 409`,
   generic `BackendError → 400`, anything else → 500). Exports `apiOk(data)`,
   `apiError(err)`, and `withApiResponse(handler)` wrapper. Standard envelope:
   `{ ok: true, data }` or `{ ok: false, error: { code, message, details? } }`.
-- `src/lib/cn.ts` — `cn()` helper combining `clsx` + `tailwind-merge` (the
+- `src/lib/cn.ts` - `cn()` helper combining `clsx` + `tailwind-merge` (the
   shadcn-standard utility).
 
-**`scripts/`, `src/emails/`, `src/components/`, `src/hooks/`** — created
+**`scripts/`, `src/emails/`, `src/components/`, `src/hooks/`** - created
 as empty directories so subsequent phases have a place to land their files
 without surprises.
 
-### Phase 0 deliverable checklist — all green
+### Phase 0 deliverable checklist - all green
 
 - [x] `npm run dev` starts on demand and serves `/` with a 200 response
       (verified by curl during build); both font CSS variables appear on
@@ -118,9 +118,9 @@ without surprises.
 - [x] `src/lib/api-response.ts` exists and maps typed errors → HTTP codes
 - [x] ESLint boundary rule rejects `src/components/* → src/backend/services/*`
       (verified by adding a temporary file that imported a placeholder
-      service — produced a `boundaries/element-types` error, then removed)
+      service - produced a `boundaries/element-types` error, then removed)
 - [x] ESLint boundary rule rejects `src/backend/* → next/*` (verified the
-      same way with a temp file importing `next/server` — produced the
+      same way with a temp file importing `next/server` - produced the
       `no-restricted-imports` error, then removed)
 - [x] Path aliases `@/` and `@/backend/` resolve in TS and at build time
 - [x] `.env.example` lists all 17 required vars in the same order as the
@@ -136,7 +136,7 @@ without surprises.
    `next-auth` beta is `5.0.0-beta.31` (its peer range now includes Next 16).
 2. **Tailwind v4, not v3.** `create-next-app` installs Tailwind v4. The
    brand palette lives in `src/app/globals.css` under `@theme { ... }`
-   (the v4 way) — `tailwind.config.ts` exists alongside it for IDE
+   (the v4 way) - `tailwind.config.ts` exists alongside it for IDE
    tooling and to satisfy the spec's literal "configure brand palette in
    `tailwind.config.ts`" wording, but Tailwind v4 reads its theme from
    the CSS file.
@@ -147,7 +147,7 @@ without surprises.
 4. **shadcn/ui CLI not run.** The spec says "configure shadcn/ui with the
    brand palette." I added `components.json` and the `cn()` helper so any
    `npx shadcn add <component>` Phase 2/3 runs Just Works against our
-   palette. I deliberately did not pre-install component primitives —
+   palette. I deliberately did not pre-install component primitives -
    downstream agents pick the components they actually use.
 5. **API route placeholders are empty directories** (one `.gitkeep` at
    the api root). Adding stub `route.ts` files with `501 Not Implemented`
@@ -199,11 +199,11 @@ $ npm run build        # 5 prerendered routes, no errors
 $ curl http://localhost:3456/  # 200, brand classes in HTML, both fonts loaded
 ```
 
-— Architect, Phase 0 done. Ready for Phase 1.
+- Architect, Phase 0 done. Ready for Phase 1.
 
 ---
 
-## Phase 1 — Backend Engineer ✅
+## Phase 1 - Backend Engineer ✅
 
 ### What I built
 
@@ -222,16 +222,16 @@ results.
 
 Run with `npm run seed` (uses `tsx`; reads `.env.local`).
 
-**Admin** — full access to `/admin/*`:
+**Admin** - full access to `/admin/*`:
 - `admin@virtualtouch.com` / `Admin123!`
 
-**Workers** — each linked to one therapist, access to `/portal/*`:
+**Workers** - each linked to one therapist, access to `/portal/*`:
 - `maya@virtualtouch.com` / `Worker123!`     (Maya Chen)
 - `jordan@virtualtouch.com` / `Worker123!`   (Jordan Rivera)
 - `priya@virtualtouch.com` / `Worker123!`    (Priya Nair)
 
 The seed warns when run that you should change the admin password before
-production. It is idempotent — re-running creates no duplicates (verified by
+production. It is idempotent - re-running creates no duplicates (verified by
 counting documents before and after a second run; counts are stable at 4
 users / 4 services / 3 therapists / 15 working-hours rows / 12 service
 links / 1 settings doc).
@@ -246,7 +246,7 @@ dedicated container:
 docker run -d --name massage-booking-mongo -p 27021:27017 mongo:7
 ```
 
-`.env.local` (which I created — it was absent) points at it via
+`.env.local` (which I created - it was absent) points at it via
 `MONGODB_URI=mongodb://127.0.0.1:27021/virtual-touch`. The test suite
 overrides this to the `virtual-touch-test` DB on the same host so it never
 clobbers dev data.
@@ -255,31 +255,31 @@ If Phase 2 wants to use a different Mongo, just edit `MONGODB_URI` in
 `.env.local`. The test helper computes its DB name by replacing whatever
 path is in that URI.
 
-### Models — what's stored where
+### Models - what's stored where
 
 All 10 models in `src/backend/models/`. Each file exports the Mongoose
 model, the document interface (`IBooking`, etc.), and a `toDTO()`
-converter. Services NEVER return raw documents — only DTOs (re-exported
+converter. Services NEVER return raw documents - only DTOs (re-exported
 from `@/backend`).
 
 Notable indexes:
-- `Booking`: compound `(therapistId, startAt)` — overlap queries; plus
+- `Booking`: compound `(therapistId, startAt)` - overlap queries; plus
   `(therapistId, status, startAt)` (worker dashboards) and
   `(status, startAt, reminderSentAt)` (reminder cron, Phase 4).
 - `Booking.manageToken`: unique.
-- `BookingHold.expiresAt`: TTL with `expireAfterSeconds: 0` — Mongo deletes
+- `BookingHold.expiresAt`: TTL with `expireAfterSeconds: 0` - Mongo deletes
   expired holds automatically. Verified live (`holds-ttl.test.ts`).
 - `TherapistService` (therapistId, serviceId): unique.
 - `User.email`: unique.
 
 Deviations / additions vs. the literal spec:
-1. `Booking` got a `therapistNotes` field (private to staff) up front — the
+1. `Booking` got a `therapistNotes` field (private to staff) up front - the
    admin/worker portals (Phase 3) need it and it was cleaner to add now.
 2. `IntakeFormData` is a typed sub-document on `Booking` (`pressurePreference`,
    `problemAreas[]`, `allergies`, `medications`, `healthConditions`,
    `pregnancyStatus`, `recentInjuries`, `firstVisit`, `signedAt`).
 3. `Booking.status` defaults to `confirmed` (we don't expose `pending` in
-   the public flow yet — the spec lists it for completeness, but
+   the public flow yet - the spec lists it for completeness, but
    `createBooking` always lands `confirmed`).
 
 ### Booking concurrency strategy
@@ -298,7 +298,7 @@ overlap rejection without needing a transaction:
    the rare race where a faster peer cleaned us up before we got to step 2).
 
 Verified by `bookings-concurrency.test.ts`: two concurrent
-`createBooking` calls — exactly one returns the DTO, the other rejects
+`createBooking` calls - exactly one returns the DTO, the other rejects
 with `ConflictError`, and the DB ends with exactly one booking.
 
 ### Availability slot generation
@@ -312,7 +312,7 @@ with `ConflictError`, and the DB ends with exactly one booking.
 3. Subtracts confirmed/pending bookings (with `bufferMin` expansion on
    both sides), approved time off, and active holds.
 4. Drops past slots.
-5. Returns `{ therapistId, startAt, endAt }` in UTC ISO strings — the
+5. Returns `{ therapistId, startAt, endAt }` in UTC ISO strings - the
    frontend formats in `settings.businessTimezone`.
 
 `getFirstAvailableAcrossTherapists(serviceId, fromDate?, daysAhead=14)`
@@ -321,12 +321,12 @@ therapist" button in the booking flow (Phase 2).
 
 Verified by 5 cases in `availability.test.ts`.
 
-### Holds — TTL behavior
+### Holds - TTL behavior
 
 `holdsService.createHold` upserts a 10-min lock; conflicting active holds
 or bookings throw `ConflictError`. The same session can re-hold the same
 slot to refresh its TTL. `releaseHold` requires the original `sessionId`.
-The Mongo TTL monitor (~60s sweep) deletes expired holds — verified by
+The Mongo TTL monitor (~60s sweep) deletes expired holds - verified by
 `holds-ttl.test.ts` which sets a hold's `expiresAt` to the past and waits
 up to 90s for the sweep.
 
@@ -335,13 +335,13 @@ up to 90s for the sweep.
 NextAuth v5 in Next 16 needs a split config because the middleware runs in
 Edge runtime and can't load Mongoose:
 
-- `src/auth.config.ts` — edge-safe (`callbacks`, `pages`, empty providers
+- `src/auth.config.ts` - edge-safe (`callbacks`, `pages`, empty providers
   array).
-- `src/auth.ts` — Node-runtime full instance: extends the config with the
+- `src/auth.ts` - Node-runtime full instance: extends the config with the
   Credentials provider whose `authorize` calls
   `authController.verifyCredentials({ input })`. Used by route handler +
   server actions.
-- `src/middleware.ts` — builds its own NextAuth instance from `authConfig`
+- `src/middleware.ts` - builds its own NextAuth instance from `authConfig`
   alone, so middleware never imports the backend. Uses `auth(req => …)`
   pattern.
 
@@ -349,7 +349,7 @@ The `next-auth` import lives only in those three files (plus the route
 handler at `src/app/api/auth/[...nextauth]/route.ts` and the login server
 action). `grep -rn 'from "next-auth' src/backend/` returns zero.
 
-### Public surface (`@/backend`) — what Phase 2 has to call
+### Public surface (`@/backend`) - what Phase 2 has to call
 
 Routes / server components import like:
 
@@ -456,7 +456,7 @@ from `src/auth.ts` and returns either `{ ok, redirectTo }` or
 `{ ok: false, error }`. The form uses `router.push(redirectTo)` so the
 client navigates without a full reload, and middleware does the
 admin-vs-worker bounce on the next request. The action does NOT touch
-Mongoose — only NextAuth, which delegates to `authController`.
+Mongoose - only NextAuth, which delegates to `authController`.
 
 ### What Phase 2 (Public Frontend) needs to know
 
@@ -478,13 +478,13 @@ Mongoose — only NextAuth, which delegates to `authController`.
    `.cancel`/`.reschedule({ input: { manageToken, … } })`.
 4. **Turnstile**: the booking schema accepts `turnstileToken`; the
    booking service does NOT yet verify it (no `turnstileService` exists
-   — that's Phase 4). When Phase 4 lands, hooking it into
+   - that's Phase 4). When Phase 4 lands, hooking it into
    `bookingsService.createBooking` is a one-line addition. Until then,
    include the token in the request payload and the route layer can
    reject missing tokens (or skip verification in dev).
 5. **Rate limiting**: not yet implemented. Spec says it lives at the
    route layer (Phase 2 `/api/holds` + `/api/bookings` with Upstash).
-6. **API route handlers / route handlers** are still empty — the
+6. **API route handlers / route handlers** are still empty - the
    Architect set up the directories. Phase 2 fills `src/app/api/{holds,
    bookings, availability}/route.ts` and friends. Use
    `withApiResponse(...)` from `src/lib/api-response.ts` to convert
@@ -497,12 +497,12 @@ Mongoose — only NextAuth, which delegates to `authController`.
 
 Three suites under `src/backend/__tests__/`, runnable with
 `npm run test:backend`:
-- `availability.test.ts` — 5 cases covering empty day, existing booking
+- `availability.test.ts` - 5 cases covering empty day, existing booking
   exclusion, buffer behavior, missing therapist-service link, and
   inactive therapist.
-- `bookings-concurrency.test.ts` — 2 cases: simultaneous double-book
+- `bookings-concurrency.test.ts` - 2 cases: simultaneous double-book
   resolves to exactly one survivor; sequential second attempt fails fast.
-- `holds-ttl.test.ts` — 2 cases: TTL index exists with `expireAfterSeconds=0`,
+- `holds-ttl.test.ts` - 2 cases: TTL index exists with `expireAfterSeconds=0`,
   and the live Mongo TTL monitor expires a past hold within 90s.
 
 The tests point at a `virtual-touch-test` DB on the same Mongo as dev.
@@ -558,26 +558,26 @@ src/backend/
     settings.schema.ts
     therapists.schema.ts
   types/
-    index.ts            (extended — DTO re-exports + AvailableSlotDTO)
+    index.ts            (extended - DTO re-exports + AvailableSlotDTO)
   __tests__/
     _helpers.ts
     availability.test.ts
     bookings-concurrency.test.ts
     holds-ttl.test.ts
-  index.ts              (replaced — all controllers re-exported)
+  index.ts              (replaced - all controllers re-exported)
 
-src/auth.config.ts       (new — edge-safe NextAuth config)
-src/auth.ts              (new — Node-runtime full NextAuth)
-src/auth.handlers.ts     (new — re-exports GET/POST for the route)
-src/middleware.ts        (replaced — role-based gating)
-src/app/api/auth/[...nextauth]/route.ts (new — thin re-export)
+src/auth.config.ts       (new - edge-safe NextAuth config)
+src/auth.ts              (new - Node-runtime full NextAuth)
+src/auth.handlers.ts     (new - re-exports GET/POST for the route)
+src/middleware.ts        (replaced - role-based gating)
+src/app/api/auth/[...nextauth]/route.ts (new - thin re-export)
 src/app/(auth)/login/
-  page.tsx               (rewritten — renders LoginForm)
-  login-form.tsx         (new — client form)
-  actions.ts             (new — server action calling signIn)
+  page.tsx               (rewritten - renders LoginForm)
+  login-form.tsx         (new - client form)
+  actions.ts             (new - server action calling signIn)
 
-scripts/seed.ts          (new — idempotent seed)
-.env.local               (new — local dev config)
+scripts/seed.ts          (new - idempotent seed)
+.env.local               (new - local dev config)
 package.json             (added scripts: seed, test:backend; dev dep: dotenv)
 HANDOFF.md               (this section)
 ```
@@ -588,7 +588,7 @@ HANDOFF.md               (this section)
 $ npm run lint                              # exits 0
 $ npx tsc --noEmit                          # exits 0
 $ npm run build                             # 6 routes, 1 middleware, no errors
-$ npm run seed                              # idempotent — counts stable across runs
+$ npm run seed                              # idempotent - counts stable across runs
 $ npm run test:backend                      # 9/9 tests pass (including live TTL)
 $ grep -rn 'from "next' src/backend/        # 0 results
 $ grep -rn 'from "next-auth' src/backend/   # 0 results
@@ -596,11 +596,11 @@ $ curl -i /admin (no auth)                  # 307 → /login?from=/admin
 $ curl -i /portal (no auth)                 # 307 → /login?from=/portal
 ```
 
-— Backend Engineer, Phase 1 done. Ready for Phase 2.
+- Backend Engineer, Phase 1 done. Ready for Phase 2.
 
 ---
 
-## Phase 2 — Public Frontend Engineer ✅
+## Phase 2 - Public Frontend Engineer ✅
 
 ### What I built
 
@@ -611,25 +611,25 @@ self-service page, plus the thin API routes that back them. `npm run lint`,
 
 ### Public routes delivered
 
-- **`/`** — Hero (Fraunces business name + watercolor brand artwork at
+- **`/`** - Hero (Fraunces business name + brand artwork at
   `/public/brand/hero.svg`, swappable), DB-driven Services + Therapists
   sections, hardcoded Testimonials (TODO marker), FAQ accordion that pulls
   cancellation policy from Settings, Footer with business info.
-- **`/book`** — Therapist grid with the active team. Top of the page has an
+- **`/book`** - Therapist grid with the active team. Top of the page has an
   "Any therapist (first available)" CTA → `/book/any`.
-- **`/book/any`** — Pick a service, then `availabilityController.firstAvailable`
+- **`/book/any`** - Pick a service, then `availabilityController.firstAvailable`
   surfaces the earliest opening across all therapists.
-- **`/book/[therapistId]`** — Therapist bio + credentials + specialties,
+- **`/book/[therapistId]`** - Therapist bio + credentials + specialties,
   service picker (filtered to ones the therapist actually offers), 30-day
   date strip, slot list. Mobile-first; sticky Continue CTA.
-- **`/book/confirm`** — Customer details form, booking summary panel,
+- **`/book/confirm`** - Customer details form, booking summary panel,
   cancellation policy, Cloudflare Turnstile widget, hold countdown timer.
   On mount: POSTs to `/api/holds` to lock the slot for 10 min. On submit:
   POSTs to `/api/bookings` with the hold + Turnstile token; redirects to
   `/book/success?token=…`. On unmount: `keepalive: true` DELETE to release.
-- **`/book/success`** — Confirmation summary, "Add to calendar" .ics link
+- **`/book/success`** - Confirmation summary, "Add to calendar" .ics link
   (`/api/bookings/ics?token=…`), "Manage your booking" magic-link button.
-- **`/manage/[token]`** — Token-gated self-service page: reschedule (date
+- **`/manage/[token]`** - Token-gated self-service page: reschedule (date
   strip + slot list, PATCH /api/bookings/[token]) and cancel (DELETE).
   Shows cancellation policy. No login required.
 
@@ -643,22 +643,22 @@ All public pages share `src/app/(public)/layout.tsx` which renders
 | `POST /api/holds` | 13 | Rate-limited (5/min/IP) |
 | `DELETE /api/holds/[id]` | 14 | sessionId from query string |
 | `POST /api/bookings` | 14 | Rate-limited; passes `ip` in context |
-| `PATCH /api/bookings/[id]` | — | `[id]` is the manage token |
-| `DELETE /api/bookings/[id]` | — | (same — see file: 30 lines combined) |
+| `PATCH /api/bookings/[id]` | - | `[id]` is the manage token |
+| `DELETE /api/bookings/[id]` | - | (same - see file: 30 lines combined) |
 | `GET /api/availability` | 25 | Switches on `mode=first-available` |
 | `GET /api/bookings/ics` | 21 | Returns `text/calendar` |
 
 `src/app/api/bookings/[id]/route.ts` is 30 lines because it has BOTH PATCH
-and DELETE handlers — each handler body is well under 20 lines of logic.
+and DELETE handlers - each handler body is well under 20 lines of logic.
 
 ### Backend additions (fix-forward + Phase 2 scope)
 
-1. **`src/backend/services/turnstile.service.ts`** — `verifyToken(token, ip?)`
+1. **`src/backend/services/turnstile.service.ts`** - `verifyToken(token, ip?)`
    posts to Cloudflare's siteverify endpoint with the server secret. Throws
    `ValidationError` on missing/invalid tokens. Fail-closed if
    `TURNSTILE_SECRET_KEY` is unset (refuses booking rather than skipping
-   verification — prevents misconfigured prod from silently disabling).
-2. **`src/backend/services/ics.service.ts`** — `buildBookingIcs({ booking,
+   verification - prevents misconfigured prod from silently disabling).
+2. **`src/backend/services/ics.service.ts`** - `buildBookingIcs({ booking,
    service, therapist, settings })` → `{ filename, body }`. Phase 4 (email)
    can reuse the same helper to attach the same .ics to confirmation emails.
 3. **`src/backend/controllers/bookings.controller.ts`**:
@@ -691,31 +691,31 @@ cancel all return 200 with the hex token from a freshly created booking.
 
 All under `src/components/`, importable from anywhere:
 
-- **`site-header.tsx`** / **`site-footer.tsx`** — public chrome.
-- **`therapist-card.tsx`** — `selectable` prop wraps in a `/book/[id]` link.
+- **`site-header.tsx`** / **`site-footer.tsx`** - public chrome.
+- **`therapist-card.tsx`** - `selectable` prop wraps in a `/book/[id]` link.
   Falls back to initials when `photoUrl` is absent (no broken images).
-- **`service-card.tsx`** — uses `formatPrice` + `formatDuration` from `@/lib/format`.
-- **`faq-accordion.tsx`** — accessible client accordion (`aria-expanded`).
-- **`booking/service-picker.tsx`** — radiogroup-style service tile picker.
-- **`booking/date-strip.tsx`** — horizontally-scrollable 30-day date strip,
+- **`service-card.tsx`** - uses `formatPrice` + `formatDuration` from `@/lib/format`.
+- **`faq-accordion.tsx`** - accessible client accordion (`aria-expanded`).
+- **`booking/service-picker.tsx`** - radiogroup-style service tile picker.
+- **`booking/date-strip.tsx`** - horizontally-scrollable 30-day date strip,
   formats day labels in the business TZ. **Reusable for Phase 3** if admins
   need a similar surface for staff-created bookings.
-- **`booking/booking-picker.tsx`** — full pick-service / pick-date / pick-slot
+- **`booking/booking-picker.tsx`** - full pick-service / pick-date / pick-slot
   flow. Uses derived loading state (request-key comparison) instead of
   setState-in-effect, which the React 19 lint rule flags.
-- **`booking/any-therapist-picker.tsx`** — first-available variant.
-- **`booking/booking-confirm-form.tsx`** — orchestrates hold lifecycle +
+- **`booking/any-therapist-picker.tsx`** - first-available variant.
+- **`booking/booking-confirm-form.tsx`** - orchestrates hold lifecycle +
   countdown + Turnstile + booking submit + redirect.
-- **`booking/manage-booking-actions.tsx`** — reschedule / cancel UI for the
+- **`booking/manage-booking-actions.tsx`** - reschedule / cancel UI for the
   magic-link page.
 
 ### Hooks placed in `src/hooks/`
 
-- **`use-session-id.ts`** — `useSyncExternalStore`-based stable per-browser
+- **`use-session-id.ts`** - `useSyncExternalStore`-based stable per-browser
   session id stored in localStorage. Used as the holder identity for slot
   holds. **Reuse this for any Phase 3+ feature that needs a stable
   pre-auth client identity.**
-- **`use-hold-countdown.ts`** — accepts an `expiresAt` ISO string and
+- **`use-hold-countdown.ts`** - accepts an `expiresAt` ISO string and
   returns `{ remainingSec, expired, display }`, ticking once per second.
   Reusable wherever a server-side TTL needs a client-visible timer.
 
@@ -724,7 +724,7 @@ All under `src/components/`, importable from anywhere:
 - Uses `@upstash/ratelimit` + `@upstash/redis` when `UPSTASH_REDIS_REST_URL`
   + `UPSTASH_REDIS_REST_TOKEN` are set.
 - Falls back to a process-local in-memory limiter for dev (configure
-  Upstash before going live — the in-memory bucket resets per serverless
+  Upstash before going live - the in-memory bucket resets per serverless
   cold-start).
 - `clientIpFrom(headers)` extracts from `x-forwarded-for` then `x-real-ip`,
   falling back to `"unknown"`.
@@ -736,7 +736,7 @@ All under `src/components/`, importable from anywhere:
 ### Format helpers (`src/lib/format.ts`)
 
 `formatTime`, `formatDate`, `formatDateTime`, `formatPrice`,
-`formatDuration`, `toBusinessDate` — all driven by `date-fns-tz` so the
+`formatDuration`, `toBusinessDate` - all driven by `date-fns-tz` so the
 business timezone (from Settings) is respected everywhere.
 
 ### Turnstile dev / prod behavior
@@ -755,25 +755,25 @@ business timezone (from Settings) is respected everywhere.
 ### End-to-end verification (live, against seeded Mongo)
 
 - ✅ Landing, `/book`, `/book/any`, `/book/[id]`, `/book/confirm`,
-  `/book/success`, `/manage/[token]` — all return 200 and render
+  `/book/success`, `/manage/[token]` - all return 200 and render
   expected DB content.
 - ✅ Booking flow against `Maya Chen + Deep Tissue + 2026-05-04 20:00 UTC`
   → 200 + booking persisted with `status: confirmed` + manage token round-trips.
-- ✅ Concurrent submit on the same slot — exactly one booking succeeds, the
+- ✅ Concurrent submit on the same slot - exactly one booking succeeds, the
   other returns `{ ok: false, error: { code: "CONFLICT" } }`. DB final
   state contains exactly one booking. (Race verified live in addition to
   Phase 1's existing test.)
-- ✅ Two browser sessions on the same slot at the same time — the holds
+- ✅ Two browser sessions on the same slot at the same time - the holds
   service's conflict check surfaces "Slot is held by another customer"
   to the second hold attempt.
-- ✅ Hold lifecycle — POST creates a 10-min hold; DELETE with the wrong
+- ✅ Hold lifecycle - POST creates a 10-min hold; DELETE with the wrong
   `sessionId` returns NOT_FOUND; DELETE with the correct sessionId returns
   `{ ok: true }`. Mongo TTL expiry verified by Phase 1's `holds-ttl.test.ts`.
-- ✅ Rate limit — sixth call from the same IP within a minute returns 429.
-- ✅ Turnstile — POST without a token returns 400 with a clean message.
-- ✅ ICS — `GET /api/bookings/ics?token=…` returns `text/calendar` with
+- ✅ Rate limit - sixth call from the same IP within a minute returns 429.
+- ✅ Turnstile - POST without a token returns 400 with a clean message.
+- ✅ ICS - `GET /api/bookings/ics?token=…` returns `text/calendar` with
   proper VCALENDAR/VEVENT envelope (UID, DTSTART, DTEND, SUMMARY,
-  ORGANIZER, STATUS=CONFIRMED). Manually inspected — opens in macOS
+  ORGANIZER, STATUS=CONFIRMED). Manually inspected - opens in macOS
   Calendar / Google Calendar (the `ics` package's output is RFC-5545).
 - ✅ Architecture audit:
   - `grep -rn 'from "@/backend/services' src/app src/components src/hooks src/lib` → 0
@@ -822,29 +822,29 @@ src/backend/services/ics.service.ts                      (new)
 src/backend/controllers/bookings.controller.ts           (Turnstile gate + getICS)
 src/backend/services/bookings.service.ts                 (manage-token lookup fix)
 
-public/brand/hero.svg                                    (placeholder watercolor)
+public/brand/hero.svg                                    (placeholder)
 ```
 
 ### What Phase 3 (Internal Portals Engineer) needs to know
 
-1. **Use the controller surface** (`@/backend`). Same rules as Phase 2 —
+1. **Use the controller surface** (`@/backend`). Same rules as Phase 2 -
    never reach into `src/backend/services/*` or `src/backend/models/*`.
-2. **Skipping Turnstile for staff bookings** is automatic — the
+2. **Skipping Turnstile for staff bookings** is automatic - the
    `bookingsController.create` check is gated by `context.role`. Pass
    `{ context: { role: "admin" | "worker", userId, … } }` (built from the
    NextAuth session) and Turnstile is bypassed cleanly.
 3. **Reusable components** (already placed in `src/components/`):
-   - `<TherapistCard>`, `<ServiceCard>` — fine for read-only admin lists.
-   - `<DateStrip>` — admin "create booking on behalf of customer" can use.
-   - `<FaqAccordion>` — generic accordion if admin Settings wants one.
-   - `<SiteHeader>` / `<SiteFooter>` — these are public-only; admin gets
+   - `<TherapistCard>`, `<ServiceCard>` - fine for read-only admin lists.
+   - `<DateStrip>` - admin "create booking on behalf of customer" can use.
+   - `<FaqAccordion>` - generic accordion if admin Settings wants one.
+   - `<SiteHeader>` / `<SiteFooter>` - these are public-only; admin gets
      its own chrome.
 4. **Reusable hooks** (already in `src/hooks/`):
-   - `useSessionId` — only relevant if admin tries to do anonymous-style
+   - `useSessionId` - only relevant if admin tries to do anonymous-style
      flows; otherwise admins are authenticated.
-   - `useHoldCountdown` — useful for any TTL-driven UI (e.g. an admin
+   - `useHoldCountdown` - useful for any TTL-driven UI (e.g. an admin
      "edit window" lock).
-5. **Toast / error display** — Phase 2 used inline `role="alert"` blocks
+5. **Toast / error display** - Phase 2 used inline `role="alert"` blocks
    per form; no toast library yet. **Phase 3 should pick a toast pattern
    (e.g. shadcn `<Toaster>` or a small custom one) and put it in
    `src/components/ui/`**, then back-port to public flows in QA polish.
@@ -853,7 +853,7 @@ public/brand/hero.svg                                    (placeholder watercolor
    Inside, call `await auth()` (from `src/auth.ts`) → build a `RequestContext`
    (`{ userId, role, therapistId, ip }`) → call the controller. Same
    <25-line rule applies.
-7. **Booking concurrency** — if admin creates a booking, the same
+7. **Booking concurrency** - if admin creates a booking, the same
    "claim-then-verify" path runs in `bookingsService.createBooking`.
    Don't roll your own conflict logic.
 8. **`buildManageToken()`** stays available in `bookings.service` if Phase 4
@@ -881,11 +881,11 @@ $ grep -rn 'from "next'      src/backend                                        
 $ grep -rn 'from "next-auth' src/backend                                          # 0
 ```
 
-— Public Frontend, Phase 2 done. Ready for Phase 3.
+- Public Frontend, Phase 2 done. Ready for Phase 3.
 
 ---
 
-## Phase 3 — Internal Portals Engineer ✅
+## Phase 3 - Internal Portals Engineer ✅
 
 ### What I built
 
@@ -898,30 +898,30 @@ and `npm run test:backend` are all green.
 
 ### Admin portal pages (`/admin`)
 
-- `/admin` — Dashboard with today / this-week counts, occupancy estimate,
+- `/admin` - Dashboard with today / this-week counts, occupancy estimate,
   active-therapist count, and an upcoming-bookings list.
-- `/admin/therapists` — list with active/inactive badge + per-row Edit /
+- `/admin/therapists` - list with active/inactive badge + per-row Edit /
   Deactivate / Reactivate. `/new` and `/[id]` use a shared `<TherapistForm>`
   client component.
-- `/admin/services` — same shape as therapists. Multi-select therapists per
+- `/admin/services` - same shape as therapists. Multi-select therapists per
   service via `<ServiceForm>`; the form maps to `servicesController.create`
   / `update` (which already accepts `therapistIds` and re-syncs the
   `therapistservices` collection).
-- `/admin/schedules` — week view of every active therapist as columns with
+- `/admin/schedules` - week view of every active therapist as columns with
   bookings and approved time-off blocks rendered per-day. Admins can
   click "+ Block" inside any cell to drop a time-off block (admin-created
   blocks are auto-approved). Pending worker time-off requests live below
   the grid with Approve / Reject buttons.
-- `/admin/bookings` — filterable table (date range, therapist, status,
+- `/admin/bookings` - filterable table (date range, therapist, status,
   customer name); per-row actions: View, Reschedule (inline datetime-local
   input), Mark complete, Mark no-show, Cancel.
-- `/admin/bookings/[id]` — full detail with intake form data, therapist
+- `/admin/bookings/[id]` - full detail with intake form data, therapist
   private notes editor, manage actions, status badge.
-- `/admin/customers` — derived from bookings via a new aggregation
+- `/admin/customers` - derived from bookings via a new aggregation
   (`customersService.listCustomers`); lists email, name, phone, totals,
   next visit. `/admin/customers/[email]` shows full booking history and
   admin-private notes that workers cannot see.
-- `/admin/settings` — business info, hours/scheduling envelope, slot
+- `/admin/settings` - business info, hours/scheduling envelope, slot
   interval, buffer, days-open toggles, cancellation policy, plus
   notification toggles. **SMS toggle is disabled with explanatory text
   when `process.env.SMS_ENABLED !== "true"`; same for email.** Verified by
@@ -930,24 +930,24 @@ and `npm run test:backend` are all green.
 
 ### Worker portal pages (`/portal`)
 
-- `/portal` — Dashboard with today's bookings, next-up appointment, upcoming.
-- `/portal/schedule` — week view filtered to the worker's own therapist id
+- `/portal` - Dashboard with today's bookings, next-up appointment, upcoming.
+- `/portal/schedule` - week view filtered to the worker's own therapist id
   (re-uses `<ScheduleWeek>` with `restrictToTherapistId`). Read-only on
   bookings (clicking opens `/portal/bookings/[id]`); blocks are surfaced
   but workers create them via the time-off page, not by clicking cells.
-- `/portal/availability` — request time off (datetime-local + reason); shows
+- `/portal/availability` - request time off (datetime-local + reason); shows
   pending/approved/rejected entries with Remove. Honors the new
   `autoApproveWorkerTimeOff` setting (when true, requests are approved on
   submit; when false, status is `pending` until admin approves).
-- `/portal/hours` — set per-day working hours within the business envelope.
+- `/portal/hours` - set per-day working hours within the business envelope.
   UI uses `min`/`max` on `<input type="time">` AND validates client-side
   against the envelope before submit. Server-side rejects with
   `ValidationError` if anything slips through (verified live).
-- `/portal/bookings/[id]` — read-only booking detail with intake-form data
+- `/portal/bookings/[id]` - read-only booking detail with intake-form data
   and an editable private therapist-notes field. The page itself enforces
   `booking.therapistId === session.therapistId` and throws
   `ForbiddenError("Cannot view another therapist's booking")` if a worker
-  tries to view another therapist's booking — verified live (Jordan
+  tries to view another therapist's booking - verified live (Jordan
   attempting Maya's booking id → 500 with that message).
 
 ### Backend additions / fix-forwards
@@ -959,12 +959,12 @@ and `npm run test:backend` are all green.
    `before`/`after` snapshots. Verified end-to-end:
    `therapist.create|Therapist`, `service.update|Service`, and
    `booking.cancel|Booking` all land in the `auditlogs` collection.
-2. **`schedulesService.deleteTimeOff`** + matching controller method — the
+2. **`schedulesService.deleteTimeOff`** + matching controller method - the
    admin schedule UI and the worker time-off panel both need to remove
    blocks. Audit-logged.
 3. **`autoApproveWorkerTimeOff` setting** added to the `Settings` singleton
    (default `false`) and to `settings.schema.ts`. Drives the worker
-   request flow — admin can flip it from `/admin/settings`.
+   request flow - admin can flip it from `/admin/settings`.
 4. **Customer notes**: new `CustomerNote` model (keyed by lowercased email),
    plus `customersService` (`listCustomers` aggregation, `getCustomer`
    detail, `addCustomerNote`, `deleteCustomerNote`) and matching
@@ -975,7 +975,7 @@ and `npm run test:backend` are all green.
 
 ### New shared infrastructure (Phase 4/5 should know)
 
-- **Toast system** — `<ToastProvider>` + `useToast()` in
+- **Toast system** - `<ToastProvider>` + `useToast()` in
   `src/components/ui/toast.tsx`. Mounts inside both portal layouts. Use
   it in any new client component:
   ```tsx
@@ -990,15 +990,15 @@ and `npm run test:backend` are all green.
   - `<Badge>` (tones: neutral / success / warning / danger / info)
   - `<Skeleton>`
   - `<EmptyState>` / `<ErrorBox>`
-- **Sidebar layout** — `<Sidebar>` in `src/components/portal/sidebar.tsx`
+- **Sidebar layout** - `<Sidebar>` in `src/components/portal/sidebar.tsx`
   takes a `title`, `subtitle`, `items[]`, and the user's email/role. Mobile
   collapses to a top-bar hamburger; desktop is a pinned column. Used by
   both `(admin)/layout.tsx` and `(portal)/layout.tsx`.
-- **Schedule week grid** — `<ScheduleWeek>` in
+- **Schedule week grid** - `<ScheduleWeek>` in
   `src/components/portal/schedule-week.tsx`. Same component renders both
   the admin all-therapists view and the worker single-therapist view via
   `restrictToTherapistId` + `bookingHrefPrefix` props.
-- **Therapist private notes editor** — `<TherapistNotesEditor>` reused on
+- **Therapist private notes editor** - `<TherapistNotesEditor>` reused on
   both `/admin/bookings/[id]` and `/portal/bookings/[id]`.
 - **Server-action helpers** in `src/lib/`:
   - `staff-context.ts` → `getStaffContext()` builds a `RequestContext` from
@@ -1060,7 +1060,7 @@ Live verification:
   for that day → 22 slots, none matching the blocked start; cleanup OK).
 - ✅ Audit log: ran a script that did `therapist.create`,
   `service.update`, and `booking.cancel` against the seeded admin user;
-  queried the `auditlogs` collection — all three actions present with
+  queried the `auditlogs` collection - all three actions present with
   correct `actorRole: "admin"` and `before/after` snapshots.
 
 ### What Phase 4 (Integrations) needs to know
@@ -1069,7 +1069,7 @@ Live verification:
    `smsNotificationsEnabled` / `emailNotificationsEnabled` and disables
    them when `process.env.SMS_ENABLED` / `EMAIL_ENABLED` is false. The
    email/SMS services in Phase 4 should check **both** flags before sending
-   — env is the master kill-switch, and the Settings toggle is the
+   - env is the master kill-switch, and the Settings toggle is the
    business-level opt-out. This matches what `TEAM_PROMPT.md` calls the
    "dual-toggle pattern."
 2. **Audit logging is already in place** for therapists / services /
@@ -1077,21 +1077,21 @@ Live verification:
    sends shouldn't need to write audit events, but if they do, use
    `record({ actorRole: "system", action: "...", entityType: "...", ... })`
    from `audit.service`.
-3. **`autoApproveWorkerTimeOff`** — Phase 4 may want to send an admin
+3. **`autoApproveWorkerTimeOff`** - Phase 4 may want to send an admin
    email when a worker submits a time-off request that needs review
    (i.e. `autoApproveWorkerTimeOff === false` and a new pending row is
    inserted). Hook into `schedulesService.createTimeOff`.
-4. **Customer notes are admin-only** — the email service should NEVER
+4. **Customer notes are admin-only** - the email service should NEVER
    include `customerNote` content in outgoing email. They're internal.
 5. **Therapist private notes** (`booking.therapistNotes`) are also
-   internal — same rule. Customer-facing email templates should pull
+   internal - same rule. Customer-facing email templates should pull
    from `booking.notes` (customer's own notes at booking) and intake
    form data, not `therapistNotes`.
 6. **CustomerNote model** lives at `src/backend/models/customerNote.model.ts`
    if Phase 4 needs to extend it (e.g. expose to email-template authors).
 7. **Schedule blocks visibility on public**: `availabilityService` already
    subtracts approved time-off. Worker-submitted-but-not-approved blocks
-   do NOT yet hide slots — that's intentional (admin reviews first). If
+   do NOT yet hide slots - that's intentional (admin reviews first). If
    Phase 4 changes that, update `getApprovedTimeOffOverlapping` query.
 
 ### Files added / changed (this phase)
@@ -1174,11 +1174,11 @@ src/backend/types/index.ts                                   (re-exports for por
 HANDOFF.md                                                   (this section)
 ```
 
-— Internal Portals, Phase 3 done. Ready for Phase 4.
+- Internal Portals, Phase 3 done. Ready for Phase 4.
 
 ---
 
-## Phase 4 — Integrations Engineer ✅
+## Phase 4 - Integrations Engineer ✅
 
 ### What I built
 
@@ -1186,18 +1186,18 @@ The full transactional comms layer: dual-toggled SMS (Twilio) + email
 (Resend), brand-styled email templates under `src/emails/`, the 24h reminder
 cron pipeline, and the public token-gated intake form. `npm run lint`,
 `npx tsc --noEmit`, `npm run build`, and `npm run test:backend` are all
-green (17/17 tests pass — 9 from earlier phases + 8 new integration
+green (17/17 tests pass - 9 from earlier phases + 8 new integration
 tests).
 
 ### SMS surface (`src/backend/services/sms.service.ts`)
 
 - `sendSms(to, body, settings)` is the low-level helper. Returns
-  `{ sent, reason }` and **never throws** — booking creation can never
+  `{ sent, reason }` and **never throws** - booking creation can never
   fail because Twilio failed.
 - Dual-toggle gate enforced inside `sendSms`:
   1. `process.env.SMS_ENABLED === "true"`
   2. `settings.smsNotificationsEnabled === true`
-  Both must be true. Either being false logs `[sms] skipped — …` and
+  Both must be true. Either being false logs `[sms] skipped - …` and
   returns `{ sent: false, reason: "env-disabled" | "settings-disabled" }`
   WITHOUT instantiating the Twilio client.
 - E.164 validation (`/^\+[1-9]\d{7,14}$/`) before send. Invalid number
@@ -1210,20 +1210,20 @@ tests).
 
 ### Email surface (`src/backend/services/email.service.ts` + `src/emails/`)
 
-- `sendEmail({ to, subject, html, ics? }, settings)` — same dual-toggle
+- `sendEmail({ to, subject, html, ics? }, settings)` - same dual-toggle
   pattern (`EMAIL_ENABLED` env + `settings.emailNotificationsEnabled`).
   Resend errors caught + logged. Returns `{ sent, reason }`.
 - Templates live under `src/emails/`:
-  - `_layout.ts` — brand-styled HTML shell (Fraunces + Inter via Google
+  - `_layout.ts` - brand-styled HTML shell (Fraunces + Inter via Google
     Fonts link tag, coral/cream/blush palette, `<table>`-based for email
     client compatibility), plus `bookingFactsHtml`, `policyBlock`, `esc`,
     `button` helpers.
-  - `booking-confirmation.ts` — confirmation with `manageUrl` CTA. Adds
+  - `booking-confirmation.ts` - confirmation with `manageUrl` CTA. Adds
     an "complete your intake form" link when `settings.intakeRequired`
     is true.
-  - `booking-reminder.ts` — 24h-out reminder.
-  - `booking-cancellation.ts` — cancellation notice with rebook CTA.
-  - `booking-reschedule.ts` — new time + (optional) previous time line.
+  - `booking-reminder.ts` - 24h-out reminder.
+  - `booking-cancellation.ts` - cancellation notice with rebook CTA.
+  - `booking-reschedule.ts` - new time + (optional) previous time line.
 - `email.service.ts` imports `src/emails/*`; the templates import only
   third-party libs and each other. Boundary enforced by `eslint.config.mjs`
   (new `from: ["emails"]` rule disallowing all backend internals + every
@@ -1254,7 +1254,7 @@ deliberately do NOT trigger customer-facing comms.
   `reminderSentAt` null, **stamps `reminderSentAt` BEFORE sending** (so
   concurrent cron fires can't double-send), then runs SMS + email.
   Returns `{ scanned, sent, skipped }`.
-- `src/backend/controllers/cron.controller.ts` → `sendReminders()` —
+- `src/backend/controllers/cron.controller.ts` → `sendReminders()` -
   framework-agnostic, just delegates.
 - `src/app/api/cron/reminders/route.ts` (18 lines, under 20):
   - Verifies `Authorization: Bearer <CRON_SECRET>` OR `x-cron-secret`
@@ -1274,16 +1274,16 @@ deliberately do NOT trigger customer-facing comms.
 ### Intake form public flow
 
 - `src/app/(public)/intake/[token]/`:
-  - `page.tsx` — server component. Calls `intakeController.getByToken`
+  - `page.tsx` - server component. Calls `intakeController.getByToken`
     with the route param; renders an "Intake link invalid" fallback if
     the JWT verify fails. Loads therapist + service + settings in
     parallel for the visit summary card.
-  - `intake-form.tsx` — client form: pressure preference (radio chips),
+  - `intake-form.tsx` - client form: pressure preference (radio chips),
     problem areas (checkbox grid), allergies / medications / health
     conditions / recent injuries (textareas), pregnancy status,
     first-visit toggle. Disclosure line states the timestamped
     submission is the digital signature.
-  - `actions.ts` — thin server action `submitIntake(token, data)`
+  - `actions.ts` - thin server action `submitIntake(token, data)`
     wrapping `intakeController.submit` via `runAction`.
 - The token is a `kind: "intake"` JWT minted by
   `tokens.service.generateIntakeToken(bookingId)` and embedded in the
@@ -1310,7 +1310,7 @@ fix-forward. I confirmed:
 - Live curl `POST /api/bookings` without `turnstileToken` → 400
   `{"code":"VALIDATION_ERROR","message":"Bot-protection token is required"}`.
 
-Hardened nothing — the existing implementation already had a fetch
+Hardened nothing - the existing implementation already had a fetch
 timeout, fail-closed missing-secret behavior, and clean error wrapping.
 
 ### How to test each integration locally
@@ -1318,10 +1318,10 @@ timeout, fail-closed missing-secret behavior, and clean error wrapping.
 #### SMS (Twilio)
 - **No-op path** (default `.env.local`): `SMS_ENABLED=false` and/or
   `settings.smsNotificationsEnabled=false`. Booking creation logs
-  `[sms] skipped — …` and never opens a network connection to Twilio.
-- **Live test** (Twilio test/magic numbers — no real charge):
+  `[sms] skipped - …` and never opens a network connection to Twilio.
+- **Live test** (Twilio test/magic numbers - no real charge):
   ```bash
-  # In .env.local — get your TEST credentials from
+  # In .env.local - get your TEST credentials from
   # https://console.twilio.com/us1/account/keys-credentials/api-keys
   SMS_ENABLED=true
   TWILIO_ACCOUNT_SID=ACxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx  # test SID
@@ -1338,14 +1338,14 @@ timeout, fail-closed missing-secret behavior, and clean error wrapping.
 
 #### Email (Resend)
 - **No-op path** (default): `EMAIL_ENABLED=false`. Logs
-  `[email] skipped — …`.
-- **Live test** (Resend onboarding sandbox — free):
+  `[email] skipped - …`.
+- **Live test** (Resend onboarding sandbox - free):
   ```bash
   EMAIL_ENABLED=true
   RESEND_API_KEY=re_<your_test_key>          # https://resend.com/api-keys
   RESEND_FROM_EMAIL="Virtual Touch <onboarding@resend.dev>"
   ```
-  `onboarding@resend.dev` is Resend's sandbox sender — works without
+  `onboarding@resend.dev` is Resend's sandbox sender - works without
   domain verification but only delivers to the email address you signed
   up with.
 - **Stub path**: same `npm run test:backend` covers the gate logic.
@@ -1365,7 +1365,7 @@ curl -i -H "Authorization: Bearer $(grep ^CRON_SECRET .env.local | cut -d= -f2-)
 
 # Idempotency: insert a confirmed booking with startAt = now + 24h, run
 # the cron, observe `scanned:1,sent:1`. Run it again immediately and
-# observe `scanned:0` — `reminderSentAt` is now stamped.
+# observe `scanned:0` - `reminderSentAt` is now stamped.
 ```
 
 #### Intake form
@@ -1373,10 +1373,10 @@ curl -i -H "Authorization: Bearer $(grep ^CRON_SECRET .env.local | cut -d= -f2-)
 # 1. Create a booking via the public flow.
 # 2. The confirmation email (when EMAIL_ENABLED=true) contains a magic
 #    link of the form http://localhost:3000/intake/<jwt>.
-# 3. Open it without logging in; submit the form; reload — the
+# 3. Open it without logging in; submit the form; reload - the
 #    "Intake form received." panel is shown (alreadySubmitted=true).
-# 4. As admin, open /admin/bookings/<id> — the intake data is rendered.
-# 5. As the assigned worker, open /portal/bookings/<id> — same.
+# 4. As admin, open /admin/bookings/<id> - the intake data is rendered.
+# 5. As the assigned worker, open /portal/bookings/<id> - same.
 #
 # Without sending an email, mint a token directly:
 node -e 'console.log(require("jsonwebtoken").sign({bookingId:"<ID>",kind:"intake"},process.env.JWT_SECRET))'
@@ -1414,7 +1414,7 @@ src/backend/services/reminders.service.ts                    (new)
 src/backend/services/bookings.service.ts                     (wired SMS+email side-effects on create/reschedule/cancel)
 src/backend/controllers/cron.controller.ts                   (new)
 src/backend/index.ts                                         (added cronController)
-src/backend/__tests__/integrations.test.ts                   (new — 8 tests)
+src/backend/__tests__/integrations.test.ts                   (new - 8 tests)
 
 src/emails/_layout.ts                                        (new)
 src/emails/booking-confirmation.ts                           (new)
@@ -1422,7 +1422,7 @@ src/emails/booking-reminder.ts                               (new)
 src/emails/booking-cancellation.ts                           (new)
 src/emails/booking-reschedule.ts                             (new)
 
-src/app/api/cron/reminders/route.ts                          (new — 18 lines)
+src/app/api/cron/reminders/route.ts                          (new - 18 lines)
 src/app/(public)/intake/[token]/page.tsx                     (new)
 src/app/(public)/intake/[token]/intake-form.tsx              (new)
 src/app/(public)/intake/[token]/actions.ts                   (new)
@@ -1438,12 +1438,12 @@ HANDOFF.md                                                   (this section)
 1. **Provider live-fire QA**: the dual-toggle is fully exercised in
    `src/backend/__tests__/integrations.test.ts`, but the QA pass should
    do at least one round-trip with real Twilio test credentials and a
-   real Resend sandbox API key against a confirmed booking — there's no
+   real Resend sandbox API key against a confirmed booking - there's no
    substitute for a real ICS attachment landing in Apple Mail / Gmail /
    Outlook.
 2. **Dev defaults** in `.env.local`: `SMS_ENABLED=false`,
    `EMAIL_ENABLED=false`, `RESEND_FROM_EMAIL=hello@virtualtouchmassage.com`
-   (placeholder — change to `onboarding@resend.dev` for the Resend
+   (placeholder - change to `onboarding@resend.dev` for the Resend
    sandbox, OR your verified domain). Do this in QA, not in the
    committed `.env.example`.
 3. **Reminder window**: 23.5–24.5h. If you change Vercel Cron from `*/15 * * * *`
@@ -1455,7 +1455,7 @@ HANDOFF.md                                                   (this section)
    product wants the opposite trade-off (retry on failure), flip the
    stamp to post-send AND add a retry-count cap to the booking model.
 5. **Intake JWT lifetime**: tokens are signed without `expiresIn`. The
-   bookingId is enough — once the booking is in the past (or
+   bookingId is enough - once the booking is in the past (or
    cancelled/completed), the intake page is harmless. If product wants
    "expire after the visit," set `expiresIn` in `tokens.service.ts`.
 6. **Email From address**: production must be a Resend-verified
@@ -1463,21 +1463,21 @@ HANDOFF.md                                                   (this section)
    and only delivers to the account owner.
 7. **Mobile email rendering**: the templates use `<table>` layout +
    inline styles. They render in Gmail, Apple Mail, Outlook desktop,
-   Outlook web. Spot-check on Outlook iOS in the QA pass — the Google
+   Outlook web. Spot-check on Outlook iOS in the QA pass - the Google
    Fonts `<link>` falls back gracefully there.
 8. **`src/emails/` boundary**: do NOT add `@/...` imports here. The
    ESLint rule will reject it. Add new email helpers as additional
    files inside `src/emails/`.
 9. **No `console.log` in `src/`**: reminders/sms/email use
    `console.info` / `console.warn` / `console.error` for ops logs.
-   QA's "no console.log" pass needs to NOT remove these — they're
+   QA's "no console.log" pass needs to NOT remove these - they're
    intentional.
 
-— Integrations Engineer, Phase 4 done. Ready for Phase 5 (QA).
+- Integrations Engineer, Phase 4 done. Ready for Phase 5 (QA).
 
 ---
 
-## Phase 5 — QA & Polish (Final Pass) ✅
+## Phase 5 - QA & Polish (Final Pass) ✅
 
 ### What I did
 
@@ -1485,7 +1485,7 @@ Final pass before deploy: production-readiness scaffolding (README,
 ensure-indexes script, error boundaries, 404, robots/sitemap, OG/Twitter
 meta, privacy + terms pages), accessibility polish on the booking flow,
 and the explicit SMS opt-in language + phone normalization called for in
-the QA spec. No upstream defects found that needed fix-forward — every
+the QA spec. No upstream defects found that needed fix-forward - every
 phase's deliverable still passes its checklist.
 
 `npm run lint`, `npx tsc --noEmit`, `npm run build`, and
@@ -1495,19 +1495,19 @@ full booking flow end-to-end against seeded data.
 ### Files added / changed
 
 ```
-README.md                                            (new — full setup + Backend Architecture)
-scripts/ensure-indexes.ts                            (new — npm run ensure-indexes)
+README.md                                            (new - full setup + Backend Architecture)
+scripts/ensure-indexes.ts                            (new - npm run ensure-indexes)
 package.json                                         (added "ensure-indexes" script)
 
 src/app/layout.tsx                                   (OG + Twitter meta, metadataBase, robots)
-src/app/error.tsx                                    (new — segment error boundary)
-src/app/global-error.tsx                             (new — last-resort error boundary)
-src/app/not-found.tsx                                (new — on-brand 404)
-src/app/sitemap.ts                                   (new — public sitemap)
+src/app/error.tsx                                    (new - segment error boundary)
+src/app/global-error.tsx                             (new - last-resort error boundary)
+src/app/not-found.tsx                                (new - on-brand 404)
+src/app/sitemap.ts                                   (new - public sitemap)
 public/robots.txt                                    (new)
 
-src/app/(public)/privacy/page.tsx                    (new — starter template w/ [LEGAL] markers)
-src/app/(public)/terms/page.tsx                      (new — starter template w/ [LEGAL] markers)
+src/app/(public)/privacy/page.tsx                    (new - starter template w/ [LEGAL] markers)
+src/app/(public)/terms/page.tsx                      (new - starter template w/ [LEGAL] markers)
 src/components/site-footer.tsx                       (added Legal column with /privacy + /terms)
 
 src/components/booking/booking-confirm-form.tsx      (SMS opt-in language + E.164 normalizer)
@@ -1520,7 +1520,7 @@ HANDOFF.md                                           (this section)
 
 No phase-1–4 file was modified beyond the additive touches listed above.
 
-### Final architecture audit (must be zero — verified)
+### Final architecture audit (must be zero - verified)
 
 ```
 $ grep -rn 'from "next' src/backend/                          → 0
@@ -1530,7 +1530,7 @@ $ grep -rn '@/backend/models'   src/components/ src/app/      → 0
 $ grep -rn 'console\.log' src/                                → 0
 ```
 
-`scripts/ensure-indexes.ts` imports from `@/backend/models` deliberately —
+`scripts/ensure-indexes.ts` imports from `@/backend/models` deliberately -
 that's the one allowed exception per the QA spec, made possible because
 `scripts/` is outside `src/` and therefore outside the eslint
 `boundaries/include` glob.
@@ -1544,7 +1544,7 @@ that's the one allowed exception per the QA spec, made possible because
 18  src/app/api/cron/reminders/route.ts
 30  src/app/api/bookings/[id]/route.ts        (PATCH + DELETE in one file)
 
-Server-action *files* (per-file totals — each individual exported action is well under 25 LOC):
+Server-action *files* (per-file totals - each individual exported action is well under 25 LOC):
 48  src/app/(admin)/admin/therapists/actions.ts        (3 actions)
 45  src/app/(admin)/admin/services/actions.ts          (3 actions)
 71  src/app/(admin)/admin/bookings/actions.ts          (5 actions)
@@ -1553,7 +1553,7 @@ Server-action *files* (per-file totals — each individual exported action is we
 ```
 
 Every action body follows the `runAction` → ctx → controller → revalidate
-pattern from Phase 3 — no DB, no Zod, no business logic in the action layer.
+pattern from Phase 3 - no DB, no Zod, no business logic in the action layer.
 
 ### Accessibility audit
 
@@ -1563,7 +1563,7 @@ flows. Findings + fixes:
 
 - **Focus visible everywhere.** `:focus-visible { outline: 2px solid var(--color-periwinkle); outline-offset: 2px; }`
   is set globally in `src/app/globals.css` from Phase 0. Spot-checked on
-  the booking date strip, slot picker, login form, admin tables — all
+  the booking date strip, slot picker, login form, admin tables - all
   show the periwinkle ring.
 - **Slot picker role.** Booking picker's slot grid was `<ul>` of
   `role="radio"` buttons (no parent radiogroup). Fixed: wrapped in
@@ -1572,16 +1572,16 @@ flows. Findings + fixes:
 - **Tap targets ≥ 44px.** Verified on slot buttons (`min-h-11` added),
   date tiles (`w-16 py-3` ≈ 60×64), nav `Book Now` (rounded-full
   px-4 py-2 ≥ 44px), admin row-action `<Button size="sm">` (UI primitive
-  enforces 36px min — slightly under 44px but the table row itself is
+  enforces 36px min - slightly under 44px but the table row itself is
   the primary tap target). Documented as acceptable for desk-class admin
   UI; primary public flow is fully ≥ 44px.
 - **Form errors announced.** Booking confirm form, login form, booking
-  picker, manage page — each wraps its error message in
+  picker, manage page - each wraps its error message in
   `<p role="alert">` (an implicit `aria-live="assertive"` region).
   Verified in source. Phase 1/2/3 already had this pattern; nothing to
   add.
 - **Alt text + aria-labels.** Hero image has descriptive alt
-  ("Watercolor blooms in coral, periwinkle, and blush — Virtual Touch
+  ("blooms in coral, periwinkle, and blush - Virtual Touch
   Massage brand artwork."). Therapist cards fall back to initials when
   `photoUrl` is missing (no broken images, no empty alt). Toggle
   switches in `<Switch>` set `role="switch"` and accept an `aria-label`
@@ -1591,11 +1591,11 @@ flows. Findings + fixes:
   - `text-ink (#2A2D3A) on bg-cream (#FBF7F4)` → 14.4:1 ✓
   - `text-coral-dark (#B85A4D) on bg-cream` → 4.6:1 ✓ (body)
   - `text-cream on bg-coral (#E07A6B)` → 3.0:1 ✓ for large/button text
-    (it's used on the `Book Now` button — 16px semibold, qualifies as
+    (it's used on the `Book Now` button - 16px semibold, qualifies as
     UI per WCAG 1.4.11). The body never uses light-on-coral.
   - `text-ink/80 on bg-blush/30 (≈ #f8e6e1)` → ~10:1 ✓
 - **Keyboard navigation.** Manually walked the booking flow with Tab
-  alone on a desktop browser — service tile picker → date strip →
+  alone on a desktop browser - service tile picker → date strip →
   slot picker → Continue → confirm form → submit. Every step reachable
   and the focus ring is visible at each step. Same for `/login` and the
   admin therapist CRUD form.
@@ -1611,16 +1611,16 @@ What I did **not** run (documented limitations of the QA environment):
 
 | Case | Result | Notes |
 |---|---|---|
-| Booking right at midnight (TZ boundary) | ✅ Pass | `availabilityService.getAvailableSlots` builds day boundaries via `fromZonedTime("…T00:00:00", tz)`, so the day starts at local midnight regardless of UTC offset. Slot generation iterates inside the working block, so a slot landing exactly at the day's last minute is dropped only if duration exceeds the block — exactly correct. |
-| Booking on DST transition day (e.g. 2026-03-08 in `America/New_York`) | ✅ Pass | `fromZonedTime` is DST-aware. On the spring-forward day, `02:00`–`03:00` simply doesn't exist locally; `fromZonedTime("…T02:00:00", tz)` jumps to the post-DST UTC instant, and the slot generator iterates by UTC ms — so the 2 AM slot is correctly skipped (the block becomes 23 hours long). I cross-checked manually by tracing dates 2026-03-08 (spring-forward) and 2026-11-01 (fall-back) through the algorithm with the seeded 9–17 working hours: both produce the expected slot count without duplicates. |
+| Booking right at midnight (TZ boundary) | ✅ Pass | `availabilityService.getAvailableSlots` builds day boundaries via `fromZonedTime("…T00:00:00", tz)`, so the day starts at local midnight regardless of UTC offset. Slot generation iterates inside the working block, so a slot landing exactly at the day's last minute is dropped only if duration exceeds the block - exactly correct. |
+| Booking on DST transition day (e.g. 2026-03-08 in `America/New_York`) | ✅ Pass | `fromZonedTime` is DST-aware. On the spring-forward day, `02:00`–`03:00` simply doesn't exist locally; `fromZonedTime("…T02:00:00", tz)` jumps to the post-DST UTC instant, and the slot generator iterates by UTC ms - so the 2 AM slot is correctly skipped (the block becomes 23 hours long). I cross-checked manually by tracing dates 2026-03-08 (spring-forward) and 2026-11-01 (fall-back) through the algorithm with the seeded 9–17 working hours: both produce the expected slot count without duplicates. |
 | Therapist deactivated mid-flow | ✅ Pass | `availabilityService` short-circuits on `!therapist.active` (returns `[]`). Existing bookings are preserved (FK-style refs by `_id`); admin/worker booking pages still resolve them. |
-| Service deactivated mid-flow | ✅ Pass | Same shape — `availabilityService` short-circuits on `!service.active`. |
-| Admin deletes therapist with future bookings | ✅ Pass (by design) | The admin UI does NOT expose hard-delete — only Deactivate (sets `active=false`). This is the "must block" path in the QA spec. New bookings blocked, existing preserved. Documented in README "Known limitations". |
-| Customer enters invalid phone | ✅ Pass | Two layers: (a) booking form runs `normalizePhoneE164(raw)` client-side — returns null for unparseable input and shows "Please enter a valid phone number, including country code (e.g. +15551234567)." in `<p role="alert">`; (b) `phoneSchema` server-side rejects strings with disallowed characters. SMS service additionally re-validates strict E.164 before dispatch. |
+| Service deactivated mid-flow | ✅ Pass | Same shape - `availabilityService` short-circuits on `!service.active`. |
+| Admin deletes therapist with future bookings | ✅ Pass (by design) | The admin UI does NOT expose hard-delete - only Deactivate (sets `active=false`). This is the "must block" path in the QA spec. New bookings blocked, existing preserved. Documented in README "Known limitations". |
+| Customer enters invalid phone | ✅ Pass | Two layers: (a) booking form runs `normalizePhoneE164(raw)` client-side - returns null for unparseable input and shows "Please enter a valid phone number, including country code (e.g. +15551234567)." in `<p role="alert">`; (b) `phoneSchema` server-side rejects strings with disallowed characters. SMS service additionally re-validates strict E.164 before dispatch. |
 | Customer enters phone without country code | ✅ Pass | `normalizePhoneE164` auto-prepends `+1` when input has 10 digits or 11 digits starting with 1. Helper text on the field tells the user this will happen. |
 | Two browser tabs holding the same slot | ✅ Pass | `holdsService.createHold` upserts on `(therapistId, startAt, status: active)`; the second tab's POST returns `ConflictError → 409`. Phase 2's `BookingConfirmForm` surfaces this as "Could not hold this slot. It may have just been booked." |
 | Hold expires while user on confirm page | ✅ Pass | `useHoldCountdown` ticks the displayed timer; when `expired === true`, the submit button disables, an `<p role="alert">` announces "Your hold has expired. Please pick a new time.", and submit short-circuits with the same message. User can navigate back to pick a new time. |
-| Network failure during booking submit | ✅ Pass | `try/catch` around the `fetch("/api/bookings")` sets `submitError = "Network error — please retry."` and `setSubmitting(false)` in the `finally`. The submit button's `disabled={submitting}` prevents double-submit during the in-flight request; on failure it re-enables for retry. Turnstile is NOT reset on a network error so the user can retry without re-clicking the bot check. |
+| Network failure during booking submit | ✅ Pass | `try/catch` around the `fetch("/api/bookings")` sets `submitError = "Network error - please retry."` and `setSubmitting(false)` in the `finally`. The submit button's `disabled={submitting}` prevents double-submit during the in-flight request; on failure it re-enables for retry. Turnstile is NOT reset on a network error so the user can retry without re-clicking the bot check. |
 | Worker tries to set hours outside business envelope | ✅ Pass (Phase 3) | UI uses `min`/`max` on `<input type="time">` and validates client-side; server-side `schedulesService.setWorkingHours` throws `ValidationError("Hours must fall inside business envelope HH:MM–HH:MM")`. Tested live during Phase 3 with `06:00–10:00` → server rejects. |
 
 ### Mobile polish (375px / 414px)
@@ -1640,37 +1640,37 @@ Manual review at both widths against the 17-route inventory:
 
 ### Production-readiness checklist
 
-- [x] `README.md` written — quick-start, env reference, scripts, Backend
+- [x] `README.md` written - quick-start, env reference, scripts, Backend
   Architecture (with extraction path), deploy steps, known limitations.
 - [x] `vercel.json` cron registered (`*/15 * * * *` → `/api/cron/reminders`).
   Verified by Phase 4 and re-checked.
-- [x] `scripts/ensure-indexes.ts` written and **executed live** — all 11
+- [x] `scripts/ensure-indexes.ts` written and **executed live** - all 11
   models built indexes successfully.
 - [x] App-root error boundary (`src/app/error.tsx` for segments,
   `src/app/global-error.tsx` for the very root).
-- [x] On-brand 404 page (`src/app/not-found.tsx`) — verified live (`/nope` → 404).
-- [x] `public/robots.txt` + `src/app/sitemap.ts` — both serving (`/robots.txt`
+- [x] On-brand 404 page (`src/app/not-found.tsx`) - verified live (`/nope` → 404).
+- [x] `public/robots.txt` + `src/app/sitemap.ts` - both serving (`/robots.txt`
   → 200 text/plain, `/sitemap.xml` → 200 valid XML).
-- [x] Open Graph + Twitter meta on root layout — verified in HTML output
-  on `/`. Includes `og:image` pointing at the watercolor hero artwork.
+- [x] Open Graph + Twitter meta on root layout - verified in HTML output
+  on `/`. Includes `og:image` pointing at the hero artwork.
 - [x] Privacy policy + Terms of service pages, linked from footer.
   Marked with `[LEGAL]` for counsel review.
 - [x] SMS opt-in language present on booking form: "By providing your
   number, you agree to receive booking-related SMS. Reply STOP to opt
   out. Standard message rates may apply."
-- [x] Cookie banner — **skipped** per spec ("only if analytics added").
+- [x] Cookie banner - **skipped** per spec ("only if analytics added").
   No analytics added in this build.
 - [x] Zero `console.log` in `src/`. Phase 4's intentional
   `console.info`/`warn`/`error` ops logs preserved.
 
-### Definition of Done — final status
+### Definition of Done - final status
 
 - [x] All 6 phase checklists complete (Phase 0–4 verified by their own
   handoffs; Phase 5 above).
-- [⚠] **Production deployment to Vercel works** — _not executed_. The
+- [⚠] **Production deployment to Vercel works** - _not executed_. The
   production `npm run build` succeeds and serves the full app locally;
   the Vercel deploy step itself is left for the human operator.
-- [⚠] **Real test booking with SMS + email confirmation received** —
+- [⚠] **Real test booking with SMS + email confirmation received** -
   _not executed_. The dual-toggle gate is fully tested
   (`integrations.test.ts`); a live round-trip requires real Twilio +
   Resend credentials, which the QA environment does not have. README
@@ -1686,28 +1686,28 @@ Manual review at both widths against the 17-route inventory:
   customer notes ✓ · intake form ✓ · Turnstile ✓ ·
   DB conflict prevention ✓ · cancellation policy ✓ ·
   mobile-first calendar ✓
-- [x] Backend isolation verified — all 4 audit greps return zero, every
+- [x] Backend isolation verified - all 4 audit greps return zero, every
   API route is a thin delegator, every server action follows the
   runAction pattern.
 - [x] No critical accessibility violations identified in the manual
-  audit. Lighthouse / axe-core CLI not run in this environment — see
+  audit. Lighthouse / axe-core CLI not run in this environment - see
   "Accessibility audit" above for the methodology.
 - [x] README enables a fresh dev to set up and run.
 
-### Known limitations (carried forward — not blockers)
+### Known limitations (carried forward - not blockers)
 
 - **Testimonials hardcoded** in `src/app/(public)/page.tsx` (TODO marker).
   Future work: `Testimonial` model + admin CRUD.
-- **Therapist photos paste-only** (Phase 3 design — admin pastes a
+- **Therapist photos paste-only** (Phase 3 design - admin pastes a
   Cloudinary / Vercel Blob URL into `photoUrl`). No upload widget.
-- **Privacy + Terms are starter templates** — search for `[LEGAL]`
+- **Privacy + Terms are starter templates** - search for `[LEGAL]`
   markers; review with counsel before going public. They are linked
   from the footer and the booking confirm form.
-- **Hard-delete of therapists/services intentionally absent** —
+- **Hard-delete of therapists/services intentionally absent** -
   Deactivate is the only path. To remove a therapist's data entirely,
   an admin must use direct DB access. README documents this.
-- **Cookie banner absent** — no analytics added in v1.
-- **Lighthouse score not re-measured in Phase 5** — Phase 2 verified
+- **Cookie banner absent** - no analytics added in v1.
+- **Lighthouse score not re-measured in Phase 5** - Phase 2 verified
   ≥ 90 mobile Perf/A11y locally; recommend re-running on a Vercel
   preview before launch.
 
@@ -1755,11 +1755,11 @@ Live (production build, port 3458):
   /portal       307 → /login?from=/portal    (unauthenticated)
 ```
 
-— QA, Phase 5 done. Project is ready for Vercel deploy.
+- QA, Phase 5 done. Project is ready for Vercel deploy.
 
 ---
 
-## Phase 6 — Rebrand + service-first booking + extended date range (2026-05-02)
+## Phase 6 - Rebrand + service-first booking + extended date range (2026-05-02)
 
 User-driven feature update. The features teammate landed most of the work; the team-lead finished the contact-info portion after a system crash interrupted the teammate mid-flight.
 
@@ -1821,4 +1821,4 @@ Live (production build, port 3473):
                      360 days out (weekday)      29 slots
 ```
 
-— team-lead, 2026-05-02. Project remains Vercel-ready; the operator action checklist in the Phase 5 section still applies.
+- team-lead, 2026-05-02. Project remains Vercel-ready; the operator action checklist in the Phase 5 section still applies.

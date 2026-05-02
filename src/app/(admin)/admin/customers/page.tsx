@@ -54,7 +54,7 @@ export default async function AdminCustomersPage() {
                   <td className="px-4 py-2 text-ink/80">
                     {c.lastBookingAt
                       ? formatDate(c.lastBookingAt, settings.businessTimezone)
-                      : "—"}
+                      : "-"}
                   </td>
                 </tr>
               ))}

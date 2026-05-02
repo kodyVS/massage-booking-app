@@ -6,7 +6,7 @@
  *   import { bookingsController, NotFoundError } from "@/backend";
  *
  * Never reach into `src/backend/services/*` or `src/backend/models/*`
- * from the frontend — the ESLint boundary rules will reject it.
+ * from the frontend - the ESLint boundary rules will reject it.
  */
 
 export { connectDB, disconnectDB } from "./db/connection";
@@ -14,7 +14,7 @@ export { connectDB, disconnectDB } from "./db/connection";
 export * from "./types";
 export * from "./types/errors";
 
-// Phase 1 controllers — every route handler / server action calls into one
+// Phase 1 controllers - every route handler / server action calls into one
 // of these. New controllers added in later phases append here.
 export * as authController from "./controllers/auth.controller";
 export * as availabilityController from "./controllers/availability.controller";

@@ -3,7 +3,7 @@
  *
  * Files in `src/emails/` may ONLY import from third-party libraries and from
  * other files inside `src/emails/`. The dependency direction is enforced by
- * the ESLint boundary rules — keep it that way so the templates can be
+ * the ESLint boundary rules - keep it that way so the templates can be
  * extracted into a separate package or service later.
  */
 
@@ -123,7 +123,7 @@ export interface BookingFacts {
   cancellationPolicy: string;
 }
 
-/** Reusable HTML "facts" table block — used by every template. */
+/** Reusable HTML "facts" table block - used by every template. */
 export function bookingFactsHtml(f: BookingFacts): string {
   const rows: Array<[string, string]> = [
     ["When", f.whenLong],

@@ -1,7 +1,7 @@
 import { Schema, model, models, type Model, type Types } from "mongoose";
 
 /**
- * Per-therapist weekly schedule. One row per (therapist, dayOfWeek) — the
+ * Per-therapist weekly schedule. One row per (therapist, dayOfWeek) - the
  * therapist may have a single block of working hours each day; if you need
  * splits (e.g. morning + evening) add a second row for the same day.
  *

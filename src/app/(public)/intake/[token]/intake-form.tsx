@@ -46,7 +46,7 @@ export function IntakeForm({
           Intake form received.
         </h2>
         <p className="mt-1 text-sm text-ink/80">
-          Thank you — your therapist will review this before your visit.
+          Thank you - your therapist will review this before your visit.
         </p>
       </div>
     );

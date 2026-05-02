@@ -2,7 +2,7 @@
  * Integration tests for Phase 4: SMS / email dual-toggle gating, reminder
  * idempotency, and the cron route's CRON_SECRET enforcement.
  *
- * We don't hit Twilio or Resend for real here — the test would be slow and
+ * We don't hit Twilio or Resend for real here - the test would be slow and
  * couple us to provider credentials. Instead we verify the gate logic
  * (env + settings) returns the expected `{ sent, reason }` outcome.
  */
@@ -108,7 +108,7 @@ test("sendEmail rejects empty/invalid recipient even with both flags on", async 
   assert.equal(result.reason, "invalid-recipient");
 });
 
-test("sendDueReminders is idempotent — second run does NOT re-process the same booking", async () => {
+test("sendDueReminders is idempotent - second run does NOT re-process the same booking", async () => {
   // Force both gates off so we don't try to ship real provider calls;
   // the test focuses on the booking-state state transition (reminderSentAt).
   process.env.SMS_ENABLED = "false";
@@ -147,7 +147,7 @@ test("sendDueReminders is idempotent — second run does NOT re-process the same
   const first = await sendDueReminders();
   assert.equal(first.scanned, 1);
 
-  // Second run within the same window must not re-process — reminderSentAt
+  // Second run within the same window must not re-process - reminderSentAt
   // is now stamped, so the query filter excludes it.
   const second = await sendDueReminders();
   assert.equal(second.scanned, 0, "second run must skip already-reminded");
@@ -174,7 +174,7 @@ test("sendDueReminders skips bookings outside the 23.5–24.5h window", async ()
     active: true,
   });
 
-  // 12h out — too soon
+  // 12h out - too soon
   await BookingModel.create({
     therapistId: therapist._id,
     serviceId: service._id,
@@ -187,7 +187,7 @@ test("sendDueReminders skips bookings outside the 23.5–24.5h window", async ()
     manageToken: "tok-soon",
   });
 
-  // 48h out — too far
+  // 48h out - too far
   await BookingModel.create({
     therapistId: therapist._id,
     serviceId: service._id,

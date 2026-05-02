@@ -35,7 +35,7 @@ export default async function HomePage() {
     },
     {
       quote:
-        "Booked the couples massage for our anniversary — the room felt like a quiet little garden.",
+        "Booked the couples massage for our anniversary - the room felt like a quiet little garden.",
       author: "Priya & Kabir S.",
     },
   ];
@@ -44,7 +44,7 @@ export default async function HomePage() {
     {
       question: "What should I wear?",
       answer:
-        "Whatever's comfortable. You'll undress to your comfort level in private and be draped throughout the session — only the area being worked on is exposed.",
+        "Whatever's comfortable. You'll undress to your comfort level in private and be draped throughout the session - only the area being worked on is exposed.",
     },
     {
       question: "Where do I park?",
@@ -52,7 +52,7 @@ export default async function HomePage() {
         "Street parking is available out front. Most appointments don't run into the metered hours.",
     },
     {
-      question: "It's my first visit — what should I expect?",
+      question: "It's my first visit - what should I expect?",
       answer:
         "You'll arrive a few minutes early to fill out a short intake (or fill it from the magic link in your confirmation email), chat briefly with your therapist about pressure and any sore spots, then settle in.",
     },
@@ -72,8 +72,8 @@ export default async function HomePage() {
               {settings.businessName}
             </h1>
             <p className="mt-4 text-lg text-ink/80 sm:text-xl">
-              Therapeutic massage in a calm, watercolor space. Book in under
-              two minutes — pay at your visit.
+              Therapeutic massage in a calm, welcoming space. Book in under
+              two minutes - pay at your visit.
             </p>
             <div className="mt-8 flex flex-col items-center gap-3 sm:flex-row sm:justify-center lg:justify-start">
               <Link
@@ -167,7 +167,7 @@ export default async function HomePage() {
                 <span className="ml-1 align-top">{t.quote}</span>
               </blockquote>
               <figcaption className="mt-3 text-sm font-medium text-coral-dark">
-                — {t.author}
+                - {t.author}
               </figcaption>
             </figure>
           ))}

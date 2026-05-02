@@ -4,7 +4,7 @@ import { UnauthorizedError } from "@/backend";
 
 /**
  * Build a `RequestContext` for backend controllers from the NextAuth session.
- * Throws `UnauthorizedError` when there is no authenticated staff session —
+ * Throws `UnauthorizedError` when there is no authenticated staff session -
  * `runAction` maps that to `{ ok: false, error: "..." }`.
  *
  * Used by every server action under `(admin)/` and `(portal)/`.

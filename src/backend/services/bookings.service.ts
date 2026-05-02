@@ -146,12 +146,12 @@ export async function createBooking(
       myIdStr,
     );
     if (winner !== myIdStr) {
-      // Another booking has priority — roll us back. Don't touch others;
+      // Another booking has priority - roll us back. Don't touch others;
       // they're playing the same algorithm and will reach the same verdict.
       await BookingModel.deleteOne({ _id: created._id }).exec();
       throw new ConflictError("Slot is no longer available");
     }
-    // We won — every other concurrent insert needs to be removed. Each of
+    // We won - every other concurrent insert needs to be removed. Each of
     // them will independently observe `winner !== self` and roll itself
     // back; we still issue the delete here as a belt-and-suspenders cleanup
     // in case a peer crashed before its own rollback.
@@ -207,7 +207,7 @@ export async function getBooking(input: GetBookingInput): Promise<BookingDTO> {
   await connectDB();
   const filter: Record<string, unknown> = {};
   if (parsed.id) filter._id = new Types.ObjectId(parsed.id);
-  // The manageToken is the random hex secret stored on the Booking — we look
+  // The manageToken is the random hex secret stored on the Booking - we look
   // it up directly. (The `tokens.service` JWT helpers are reserved for intake
   // links where the bookingId itself is part of the payload.)
   if (parsed.manageToken) filter.manageToken = parsed.manageToken;

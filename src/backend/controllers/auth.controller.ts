@@ -5,7 +5,7 @@ import type { VerifyCredentialsInput } from "../validation/auth.schema";
 
 /**
  * Verify login credentials. Wrapped by NextAuth's credentials provider in
- * `src/app/api/auth/[...nextauth]/route.ts` — the backend itself never
+ * `src/app/api/auth/[...nextauth]/route.ts` - the backend itself never
  * imports NextAuth.
  */
 export async function verifyCredentials({

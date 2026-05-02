@@ -80,7 +80,7 @@ export function apiError(err: unknown): NextResponse<ApiError> {
     );
   }
 
-  // Unknown error — log on the server, return a safe message.
+  // Unknown error - log on the server, return a safe message.
   console.error("[api] Unhandled error:", err);
   const message =
     err instanceof Error ? err.message : "Internal server error";
