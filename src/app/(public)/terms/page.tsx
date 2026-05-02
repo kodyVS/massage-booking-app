@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     "The terms that govern your use of the Vital Touch Massage booking site.",
 };
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 /**
  * Terms of Service.

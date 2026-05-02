@@ -22,8 +22,12 @@
 
 // Load env from .env.local (Next.js does this implicitly at runtime; tsx does not).
 import { config as loadEnv } from "dotenv";
-loadEnv({ path: ".env.local" });
-loadEnv(); // fall back to .env if .env.local is absent
+loadEnv({ path: ".env.prod" });
+//loadEnv(); // fall back to .env if .env.local is absent
+
+const rawUri = process.env.MONGODB_URI ?? "(unset)";
+const safeUri = rawUri.replace(/\/\/([^:@/]+):([^@]+)@/, "//$1:***@");
+console.log(`[seed] MONGODB_URI = ${safeUri}`);
 
 import { Types } from "mongoose";
 import { connectDB, disconnectDB } from "@/backend/db/connection";

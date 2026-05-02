@@ -2,7 +2,7 @@ import Link from "next/link";
 import { therapistsController } from "@/backend";
 import { TherapistCard } from "@/components/therapist-card";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export default async function BrowseByTherapistPage() {
   const therapists = await therapistsController.list({

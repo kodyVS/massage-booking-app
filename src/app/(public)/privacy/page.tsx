@@ -7,7 +7,7 @@ export const metadata: Metadata = {
     "How Vital Touch Massage collects, uses, and protects your personal information.",
 };
 
-export const dynamic = "force-dynamic";
+export const revalidate = 3600;
 
 /**
  * Privacy Policy.

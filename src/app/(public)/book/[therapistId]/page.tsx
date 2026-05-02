@@ -7,7 +7,14 @@ import {
 } from "@/backend";
 import { BookingPicker } from "@/components/booking/booking-picker";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
+export const dynamicParams = true;
+// Empty list at build time; Next.js renders + caches each therapist on first
+// request and reuses the cache for `revalidate` seconds. Avoids needing DB
+// access during the Vercel build phase.
+export async function generateStaticParams() {
+  return [];
+}
 
 export default async function BookTherapistPage({
   params,

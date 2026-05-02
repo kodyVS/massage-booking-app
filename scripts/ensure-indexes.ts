@@ -17,7 +17,7 @@
  * `eslint.config.mjs` (`boundaries/include` is scoped to `src/**`).
  */
 import { config as loadEnv } from "dotenv";
-loadEnv({ path: ".env.local" });
+loadEnv({ path: ".env.prod" });
 loadEnv();
 
 import { connectDB, disconnectDB } from "@/backend/db/connection";

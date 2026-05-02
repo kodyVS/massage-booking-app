@@ -9,7 +9,11 @@ import {
 import { ServiceBookingPicker } from "@/components/booking/service-booking-picker";
 import { formatDuration, formatPrice } from "@/lib/format";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
+export const dynamicParams = true;
+export async function generateStaticParams() {
+  return [];
+}
 
 export default async function BookServicePage({
   params,

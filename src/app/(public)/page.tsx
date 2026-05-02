@@ -9,8 +9,10 @@ import { ServiceCard } from "@/components/service-card";
 import { TherapistCard } from "@/components/therapist-card";
 import { FaqAccordion, type FaqItem } from "@/components/faq-accordion";
 
-// Force dynamic so DB-driven sections always reflect latest state.
-export const dynamic = "force-dynamic";
+// Cache the rendered page for 60s (ISR). Therapist + service catalogs
+// change infrequently; the booking flow itself fetches live availability
+// client-side. This keeps the home page off the per-request function pile.
+export const revalidate = 60;
 
 export default async function HomePage() {
   const [services, therapists, settings] = await Promise.all([

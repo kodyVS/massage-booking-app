@@ -2,7 +2,7 @@ import Link from "next/link";
 import { servicesController } from "@/backend";
 import { ServiceBookingCard } from "@/components/booking/service-booking-card";
 
-export const dynamic = "force-dynamic";
+export const revalidate = 60;
 
 export default async function BookIndexPage() {
   const services = await servicesController.list({

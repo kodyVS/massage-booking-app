@@ -2,7 +2,10 @@ import { settingsController } from "@/backend";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
 
-export const dynamic = "force-dynamic";
+// Layout fetches settings (business name + footer contact info). These rarely
+// change, so cache the layout for an hour. Child pages override with their
+// own revalidate when they need fresher data.
+export const revalidate = 3600;
 
 export default async function PublicLayout({
   children,
